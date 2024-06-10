@@ -1,62 +1,112 @@
-import { createContext, useEffect, useState } from "react";
-import axios from 'axios'
-import { menu_list } from "../assets/assets";
+import React, { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
-
-export const StoreContext = createContext(null)
+export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
+    const [food_list, setFoodList] = useState([]);
+    const [sortByPrice, setSortByPrice] = useState([]);
+    const [sortByMenus, setSortByMenus] = useState([]);
+    const [selectItems, setSelectItems] = useState([]);
+    const [storeData, setStoreData] = useState(null);
+    const [storeItem, setStoreItem] = useState(null);
+    const [quantity, setQuantity] = useState(1);
 
-    const [food_list, setFoodList] = useState([])
-    const [sortByPrice, setSortByPrice] = useState()
-    const [sortByMenus, setSortByMenus] = useState([])
-
-
-    const url = "http://localhost:5000"
+    const url = "http://localhost:5000";
 
     const fetchFoodList = async () => {
-
-        const res = await axios.get(url + "/menu/list")
-        setFoodList(res.data.data)
-    }
-
-
-    useEffect(() => {
-        async function loadData() {
-            await fetchFoodList()
-
+        try {
+            const res = await axios.get(url + "/menu/list");
+            setFoodList(res.data.data);
+        } catch (error) {
+            console.error("Error fetching food list:", error);
         }
-        loadData()
-    }, [])
-
-
+    };
 
     useEffect(() => {
-        setSortByPrice(food_list)
-    }, [food_list])
+        fetchFoodList();
+    }, []);
 
-    const handleSorting = async () => {
-        const findItems = await food_list.filter(x => x.category === "Cake")
-        setSortByPrice(findItems)
-    }
+    useEffect(() => {
+        setSortByPrice(food_list);
+    }, [food_list]);
 
-    const sortByVeg = async () => {
-        const findItems = await food_list.filter(x => x.category === 'pure veg')
-        setSortByPrice(findItems)
-    }
-    const sortByDeserts = async () => {
-        const findItems = await food_list.filter(x => x.category === 'Deserts')
-        setSortByPrice(findItems)
-    }
+    const handleSorting = () => {
+        const findItems = food_list.filter((x) => x.category === "Cake");
+        setSortByPrice(findItems);
+    };
 
-    const Default = async () => {
-        await setSortByPrice(food_list)
-    }
+    const sortByVeg = () => {
+        const findItems = food_list.filter((x) => x.category === "pure veg");
+        setSortByPrice(findItems);
+    };
 
-    const sortByMenu = async(abc) => {
-        const findMenu = await food_list.filter(x => x.category === abc)
-        setSortByMenus(findMenu)
-    }
+    const sortByDeserts = () => {
+        const findItems = food_list.filter((x) => x.category === "Deserts");
+        setSortByPrice(findItems);
+    };
+
+    const Default = () => {
+        setSortByPrice(food_list);
+    };
+
+    const sortByMenu = (category) => {
+        const findMenu = food_list.filter((x) => x.category === category);
+        setSortByMenus(findMenu);
+    };
+
+    const handleCardItems = (item) => {
+        const foundItem = selectItems.find((x) => x._id === item._id);
+        if (foundItem) {
+            const updatedItems = selectItems.map((X) =>
+                X._id === item._id ? { ...X, quantity: item.quantity } : X
+            );
+            setSelectItems(updatedItems);
+        } else {
+            setSelectItems([...selectItems, { ...item, quantity: item.quantity }]);
+        }
+    };
+
+    useEffect(() => {
+        const findData = () => {
+            if (storeData) {
+                const findItems = food_list.find(
+                    (x) => x._id.toString() === storeData.toString()
+                );
+                if (findItems) {
+                    setStoreItem(findItems);
+                } else {
+                    setStoreItem(null);
+                }
+            }
+        };
+        findData();
+    }, [storeData, food_list]);
+
+
+    const incrementQuantity = () => {
+        setQuantity((prevQuantity) => prevQuantity + 1);
+    };
+
+    const decrementQuantity = () => {
+        if (quantity === 1) {
+            return
+        }
+        else {
+            setQuantity((prevQuantity) => prevQuantity - 1);
+        }
+    };
+
+    useEffect(() => {
+        if (storeItem) {
+            const selectedItem = selectItems.find(item => item._id === storeItem._id);
+            if (selectedItem && typeof selectedItem.quantity === 'number') {
+                setQuantity(selectedItem.quantity);
+            } else {
+                setQuantity(1);
+            }
+        }
+    }, [storeItem, selectItems, setQuantity]);
 
     const contextValue = {
         food_list,
@@ -68,13 +118,23 @@ const StoreContextProvider = (props) => {
         url,
         sortByMenu,
         sortByMenus,
-    }
-    
+        handleCardItems,
+        selectItems,
+        storeData,
+        setStoreData,
+        incrementQuantity,
+        decrementQuantity,
+        setQuantity,
+        quantity,
+        storeItem,
+        setSelectItems
+    };
+
     return (
         <StoreContext.Provider value={contextValue}>
             {props.children}
         </StoreContext.Provider>
-    )
-}
+    );
+};
 
-export default StoreContextProvider
+export default StoreContextProvider;

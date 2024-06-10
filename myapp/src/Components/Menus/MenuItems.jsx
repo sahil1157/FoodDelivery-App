@@ -1,18 +1,17 @@
 import React from 'react'
 import FoodItems from './FoodItems'
 
-const MenuItems = ({sortByPrice}) => {
+const MenuItems = ({sortByPrice,setIsOpen,setStoreData}) => {
 
+    
     
     return (
         <>
-            <div className='lg:grid sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-9 flex flex-wrap justify-center lg:justify-between'>
+            <div data-aos='fade-up' className='lg:grid sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-9 flex flex-wrap justify-center lg:justify-between'>
                 {
                     sortByPrice && sortByPrice.map((x, ind) => {
                         return (
-                            <>
-                                <FoodItems id={x._id} image={x.image} name={x.name} description={x.description} price={x.price} category={x.category} />
-                            </>
+                                <FoodItems key={ind}  setIsOpen = {setIsOpen} setStoreData={setStoreData}  id={x._id} image={x.image} name={x.name} description={x.description} price={x.price} category={x.category} />
                         )
                     })
                 }

@@ -19,7 +19,6 @@ const Featured = () => {
         {
           featuredItems && featuredItems.map((x, id) => {
             return (
-              <>
                 <div key={id} className='cursor-pointer rounded-md text-center flex flex-col justify-center items-center bg-[#ff0000] w-[280px] h-[300px]'>
                   <div>
                     <img className='w-20 justify-center flex mx-auto h-20' src={x.img} alt="" />
@@ -27,7 +26,6 @@ const Featured = () => {
                   </div>
                   <p className='pt-4 p-5 text-sm text-white'>{x.para}</p>
                 </div>
-              </>
             )
           })
         }

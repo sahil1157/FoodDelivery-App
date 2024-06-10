@@ -10,6 +10,4 @@ const mongoConnection = () => {
     }
 }
 
-// api
-
 module.exports = mongoConnection

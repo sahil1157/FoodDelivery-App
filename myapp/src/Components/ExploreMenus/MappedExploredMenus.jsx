@@ -1,15 +1,19 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { StoreContext } from '../Context/ContextApi';
 import { assets } from '../assets/assets';
+import Aos from 'aos';
 
-const MappedExploredMenus = ({ id, price, name, category, description, image }) => {
+const MappedExploredMenus = ({ id, price, name, setIsOpen, setStoreData, description, image }) => {
     const { url } = useContext(StoreContext);
+    useEffect(() => {
+        Aos.init({ duration: 400 })
+    }, [])
     return (
-        
+
         <>
             <div data-aos='fade-up' key={id} className='cursor-pointer rounded-lg flex shadow-md flex-col gap-3 max-w-[280px] h-fit'>
                 <div>
-                    <img src={url + "/images/"  + image } className='rounded-lg w-fit' alt="" />
+                    <img onClick={() => { setIsOpen(true); setStoreData(id) }} src={url + "/images/" + image} className='rounded-lg w-fit' alt="" />
                 </div>
                 <div className='flex flex-col gap-2 p-3'>
                     <div className='flex justify-between'>

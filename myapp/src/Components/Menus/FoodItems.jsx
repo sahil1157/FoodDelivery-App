@@ -3,18 +3,18 @@ import { assets } from '../assets/assets'
 import Aos from 'aos'
 import { StoreContext } from '../Context/ContextApi'
 
-const FoodItems = ({ id, price, name, category, description, image }) => {
+const FoodItems = ({ id, price, setIsOpen,name, description, image ,setStoreData}) => {
     const { url } = useContext(StoreContext);
     
     useEffect(() => {
-        Aos.init({ duration: 500 });
+        Aos.init({ duration: 200 });
     }, []);
 
 
     return (
-        <div data-aos='fade-up' key={id} className='cursor-pointer rounded-lg flex shadow-md flex-col gap-3 max-w-[280px] h-fit'>
+        <div key={id} className='cursor-pointer rounded-lg flex shadow-md flex-col gap-3 max-w-[280px] h-fit'>
             <div>
-                <img src={url + "/images/" + image} className='rounded-lg w-fit' alt="" />
+                <img onClick={() => {setStoreData(id); setIsOpen(true)}} src={url + "/images/" + image} className='rounded-lg w-fit' alt="" />
             </div>
             <div className='flex flex-col gap-2 p-3'>
                 <div className='flex justify-between'>

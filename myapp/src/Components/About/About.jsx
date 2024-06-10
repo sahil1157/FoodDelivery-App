@@ -11,7 +11,7 @@ const About = () => {
     }, [])
 
     return (
-        <div className='pt-12 w-full flex-col justify-between mx-auto lg:text-start text-center lg:flex-row flex'>
+        <div className='md:pt-12 w-full flex-col justify-between mx-auto lg:text-start text-center lg:flex-row flex'>
             <div data-aos='fade-right' className='flex flex-col pt-10 gap-2'>
                 <p className='text-4xl md:text-6xl font-Ubuntu text-red-600'>Go Food</p>
                 <p className='text-3xl pt-3 font-semibold'>Is the best delivery service near you</p>

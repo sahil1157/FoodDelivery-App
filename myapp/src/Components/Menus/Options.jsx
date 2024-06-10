@@ -17,8 +17,8 @@ const Options = ({ setShowFilter }) => {
     }, []);
 
     return (
-        <div className='flex items-center bg-opacity-25 z-50 w-full h-full backdrop-blur-[2px] justify-center absolute '>
-            <div data-aos='fade-up' className=' flex mx-auto'>
+        <div style={{paddingInline:'5%'}} className='text-black z-30 transition-transform duration-500 absolute bg-opacity-25 backdrop-blur-[2px] w-full h-screen box-border justify-center flex '>
+            <div data-aos='fade-up' className=' flex justify-center items-center h-full w-full mx-auto'>
                 <div className='md:w-[40vw] w-full h-fit relative flex flex-col bg-white border-2 rounded-lg'>
                     <div className='flex w-full flex-col gap-3'>
                         <div className='flex flex-col'>

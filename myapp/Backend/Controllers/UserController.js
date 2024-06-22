@@ -51,30 +51,32 @@ const handleUserSignup = async (req, res) => {
 
 
 
-// User Login Handler
+// User Login Handler....
 const handleUserLogin = async (req, res) => {
-    // getting all datas from frontend...
     const { email, password } = req.body;
 
     try {
+        const user = await users.findOne({ email: email });
+        if (!user) {
+            return res.status(400).json({ message: 'Email is not registered' });
+        }
 
-        const findEmail = await users.findOne({ email: email })
-        if (!findEmail) return res.status(400).json({ message: "Email is not Registered", valid: false })
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: 'Invalid password' });
+        }
 
-        const findPassword = await bcrypt.compare(password, findEmail.password)
-        if (!findPassword) return res.status(400).json({ message: "Invalid Password", valid: false })
+        // Generating tokens...
+        const accessToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '2d' });
+        const refreshToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '3d' });
 
-        const accessToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '2d' }) //secret token...
+        // Setting cookies../
+        res.cookie('AccessToken', accessToken, { httpOnly: true, sameSite: 'None', secure: true });
+        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true });
 
-        const refreshToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '3d' })
-
-        res.cookie('AccessToken', accessToken, { httpOnly: true, sameSite: "None", secure: true, partitioned: true });
-        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: "None", secure: true, partitioned: true });
-
-        return res.json({ Login: true, accessToken, refreshToken })
-
+        return res.json({ Login: true, accessToken, refreshToken });
     } catch (error) {
-        return res.status(500).json({ message: 'Error logging in', error, valid: false });
+        return res.status(500).json({ message: 'Error logging in', error });
     }
 };
 

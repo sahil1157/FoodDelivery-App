@@ -6,9 +6,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { RxCross1 } from "react-icons/rx";
 import { toast } from 'react-toastify';
 
-
 const SignUp = ({ onClose, setShowModal, setShowSignUp }) => {
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -21,11 +19,12 @@ const SignUp = ({ onClose, setShowModal, setShowSignUp }) => {
   const api = axios.create({
     baseURL: 'https://fooddelivery-backend-varr.onrender.com',
     withCredentials: true
-  })
+  });
 
-const handleSignupToast = () => {
-  toast.success("Signup Successful")
-}
+  const handleSignupToast = () => {
+    toast.success("Signup Successful");
+  };
+
   const handleShow = () => {
     setShow(!show);
   };
@@ -60,7 +59,7 @@ const handleSignupToast = () => {
       });
       setShowSignUp(false);
       setShowModal(false);
-      handleSignupToast()
+      handleSignupToast();
     } catch (err) {
       if (err.response && err.response.status === 400) {
         setError(err.response.data.message);
@@ -78,14 +77,33 @@ const handleSignupToast = () => {
   }, []);
 
   useEffect(() => {
-    Aos.init({ duration: 200 });
+    Aos.init({ duration: 100, easing: 'ease-in-out', once: true });
+
+    let timeout;
+    const handleScroll = () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+      timeout = setTimeout(() => {
+        Aos.refresh();
+      }, 200);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
   }, []);
 
   return (
     <div
       style={{ paddingInline: '5%' }}
       data-aos="fade-up"
-      className='fixed top-0 left-0 flex items-center z-20 justify-center w-full h-screen backdrop-brightness-50 backdrop-blur-[2px] bg-opacity-40'
+      className='fixed top-0 left-0 flex items-center z-20 justify-center w-full h-screen backdrop-blur-[2px] bg-opacity-40'
     >
       <div className=' w-full flex items-center justify-center '>
         <div className='box-border relative md:w-[30vw] w-full h-fit bg-white border-[1px] rounded-xl border-gray-400'>

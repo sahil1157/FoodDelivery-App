@@ -45,7 +45,9 @@ const StoreContextProvider = (props) => {
 
     const fetchFoodList = async () => {
         try {
-            const res = await axios.get(api.defaults.baseURL + "/menu/list");
+            const res = await axios.get(api.defaults.baseURL + "/menu/list", {
+                withCredentials: true
+            });
             setFoodList(res.data.data);
         } catch (error) {
             console.error("Error fetching food list:", error);
@@ -145,7 +147,9 @@ const StoreContextProvider = (props) => {
     useEffect(() => {
         const fetchme = async () => {
             try {
-                const result = await api.get('/user/payment');
+                const result = await api.get('/user/payment', {
+                    withCredentials: true
+                });
                 setCheck(result.data.valid);
                 setLoading(false);
             } catch (error) {
@@ -160,7 +164,9 @@ const StoreContextProvider = (props) => {
 
     const handleLogOut = async () => {
         try {
-            const result = await api.post('/user/logout');
+            const result = await api.post('/user/logout', {
+                withCredentials: true
+            });
             setLogout(false);
             handleLogoutToastify();
             setCheck(result.data.valid);
@@ -185,7 +191,7 @@ const StoreContextProvider = (props) => {
             }
         }
         getMyUsers();
-    }, [check,navigate]);
+    }, [check, navigate]);
 
     const apiKey = 'f9c7c993a5b34346940a24dc1fd76244';
     const apiUrl = 'https://api.opencagedata.com/geocode/v1/json';
@@ -251,7 +257,9 @@ const StoreContextProvider = (props) => {
     useEffect(() => {
         const findEmail = async () => {
             try {
-                const getEmail = await api.get('/user/getemail',)
+                const getEmail = await api.get('/user/getemail', {
+                    withCredentials: true
+                })
                 setStoreEmail(getEmail.data.message)
             } catch (error) {
                 console.log(error)
@@ -259,7 +267,7 @@ const StoreContextProvider = (props) => {
         }
         findEmail()
 
-    },[])
+    }, [])
     const contextValue = {
         setTotalAmount,
         totalAmount,

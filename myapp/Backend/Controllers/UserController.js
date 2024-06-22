@@ -64,12 +64,12 @@ const handleUserLogin = async (req, res) => {
         const findPassword = await bcrypt.compare(password, findEmail.password)
         if (!findPassword) return res.status(400).json({ message: "Invalid Password", valid: false })
 
-        const accessToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '1d' }) //secret token...
+        const accessToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '2d' }) //secret token...
 
         const refreshToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '3d' })
 
-        res.cookie('AccessToken', accessToken, { httpOnly: true, sameSite: 'Strict', secure: true });
-        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'Strict', secure: true });
+        res.cookie('AccessToken', accessToken, { httpOnly: true, sameSite: 'None', secure: true });
+        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true });
 
         return res.json({ Login: true, accessToken, refreshToken })
 
@@ -117,8 +117,8 @@ const handleRefreshToken = async (req, res, next) => {
 
         jwt.verify(getRefreshToken, process.env.secretToken, (err, decoded) => {
             if (err) return res.status(400).json({ valid: false, message: "Error Occured while fetching refresh Token" })
-            const newAccessToken = jwt.sign({ email: decoded.email }, process.env.secretToken, { expiresIn: '1d' })
-            res.cookie('AccessToken', newAccessToken, { httpOnly: true, sameSite: 'Strict', secure: true })
+            const newAccessToken = jwt.sign({ email: decoded.email }, process.env.secretToken, { expiresIn: '2d' })
+            res.cookie('AccessToken', newAccessToken, { httpOnly: true, sameSite: 'None', secure: true })
             return newAccessToken
         })
     }

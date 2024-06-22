@@ -33,7 +33,11 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
 
     try {
 
-      const response = await axios.post("https://fooddelivery-backend-varr.onrender.com/user/login", { email, password });
+      const response = await axios.post("https://fooddelivery-backend-varr.onrender.com/user/login",
+        { email, password },
+        { withCredentials: true }
+
+      );
       console.log('Login Response:', response.data);
       setShowModal(false);
       setCheck(true)

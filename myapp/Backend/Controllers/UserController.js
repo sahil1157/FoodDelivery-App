@@ -68,8 +68,8 @@ const handleUserLogin = async (req, res) => {
 
         const refreshToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '3d' })
 
-        res.cookie('AccessToken', accessToken, { httpOnly: true, sameSite: 'None', secure: true });
-        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true });
+        res.cookie('AccessToken', accessToken, { httpOnly: true, sameSite: "None", secure: true });
+        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: "None", secure: true });
 
         return res.json({ Login: true, accessToken, refreshToken })
 
@@ -118,7 +118,7 @@ const handleRefreshToken = async (req, res, next) => {
         jwt.verify(getRefreshToken, process.env.secretToken, (err, decoded) => {
             if (err) return res.status(400).json({ valid: false, message: "Error Occured while fetching refresh Token" })
             const newAccessToken = jwt.sign({ email: decoded.email }, process.env.secretToken, { expiresIn: '2d' })
-            res.cookie('AccessToken', newAccessToken, { httpOnly: true, sameSite: 'None', secure: true })
+            res.cookie('AccessToken', newAccessToken, { httpOnly: true, sameSite: "None", secure: true })
             return newAccessToken
         })
     }
@@ -133,12 +133,12 @@ const handleLogout = (req, res) => {
     try {
         res.cookie('RefreshToken', '', {
             httpOnly: true,
-            sameSite: 'strict',
+            sameSite: "None",
             expires: new Date(0)
         })
         res.cookie('AccessToken', '', {
             httpOnly: true,
-            sameSite: 'strict',
+            sameSite: "None",
             expires: new Date(0)
         })
         return res.status(200).json({ valid: false, message: 'Logged out successfully' })
@@ -245,7 +245,7 @@ const changePassword = async (req, res) => {
     const { email, oldpassword, newpassword } = req.body
     const getRefreshToken = req.cookies.RefreshToken
     try {
-        if(newpassword === oldpassword) return res.status(400).json({valid:false,message:"your new password cannot be your old password"})
+        if (newpassword === oldpassword) return res.status(400).json({ valid: false, message: "your new password cannot be your old password" })
         // getting email from cookies i.e refreshtoken
         jwt.verify(getRefreshToken, process.env.secretToken, (err, decode) => {
             if (err) return res.status(400).json({ valid: false, message: 'Error occured' })
@@ -266,7 +266,7 @@ const changePassword = async (req, res) => {
         const findPassword = await bcrypt.compare(oldpassword, fetchEmailFromDb.password)
         if (!findPassword) return res.status(400).json({ valid: false, message: "Your old password is not valid, Please try again" })
 
-            // updating newpassword into hasded one's using bcrypt
+        // updating newpassword into hasded one's using bcrypt
         const updateNewPassword = await bcrypt.hash(newpassword, 10)
 
         // saved hashed password to that user's old password..

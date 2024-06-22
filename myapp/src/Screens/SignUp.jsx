@@ -19,7 +19,7 @@ const SignUp = ({ onClose, setShowModal, setShowSignUp }) => {
   const [error, setError] = useState("");
 
   const api = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'https://fooddelivery-app-1.onrender.com',
     withCredentials: true
   })
 

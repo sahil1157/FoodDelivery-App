@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 const DateComponent = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isOpen, setIsOpen] = useState(false);
-    const [clickCount, setClickCount] = useState(0); // Track click count
+    const [clickCount, setClickCount] = useState(0); 
     const dateRef = useRef(null);
 
     const handleDateChange = (date) => {
@@ -15,17 +15,17 @@ const DateComponent = () => {
     };
 
     const toggleDatePicker = () => {
-        setClickCount((prevCount) => prevCount + 1); // Increment click count
-        setIsOpen((prevIsOpen) => !prevIsOpen); // Toggle isOpen state
+        setClickCount((prevCount) => prevCount + 1); 
+        setIsOpen((prevIsOpen) => !prevIsOpen); 
     };
 
     const handleInputChange = () => {
-        setIsOpen(true); // Open the date picker when the input is clicked
+        setIsOpen(true);
     };
 
     const handleClose = () => {
-        setIsOpen(false); // Close the date picker
-        setClickCount(0); // Reset click count
+        setIsOpen(false);
+        setClickCount(0); 
     };
 
     return (

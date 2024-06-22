@@ -6,7 +6,6 @@ const Home = () => {
     <div className='relative flex flex-col'>
       <div>
         <Body />
-        {/* <Footer /> */}
       </div>
     </div>
   )

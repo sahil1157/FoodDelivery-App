@@ -12,7 +12,7 @@ const ChangePAssword = () => {
     const navigate = useNavigate()
 
     const api = axios.create({
-        baseURL: 'http://localhost:5000',
+        baseURL: 'https://fooddelivery-app-1.onrender.com',
         withCredentials: true
     })
 

@@ -26,7 +26,7 @@ const StoreContextProvider = (props) => {
     const [logOut, setLogout] = useState(false);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    const url = "http://localhost:5000";
+    const url = "https://fooddelivery-app-1.onrender.com";
 
     // Toast notifications
     const handleToastify = () => {

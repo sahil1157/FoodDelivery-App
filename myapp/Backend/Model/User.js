@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
 
-    },
+    }
 })
 const users = mongoose.model('userDatas', userSchema)
 module.exports = users

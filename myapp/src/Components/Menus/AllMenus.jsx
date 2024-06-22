@@ -31,7 +31,7 @@ const AllMenus = ({ setShowFilter ,handleCardItems}) => {
     ];
 
     useEffect(() => {
-        AOS.init({ duration: 1200 });
+        AOS.init({ duration: 200 });
     }, []);
 
 

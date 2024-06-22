@@ -22,7 +22,7 @@ const BoxComp = ({ handleTotal }) => {
                                 <div key={ind} className='flex flex-col gap-4'>
                                     <div className='w-full h-fit items-center flex flex-row justify-between'>
                                         <div className='flex flex-row gap-3'>
-                                            <div className='w-20 h-20'>
+                                            <div className='w-28 h-20'>
                                                 <img className='rounded-xl w-full h-full' src={url + '/images/' + item.image} alt="" />
                                             </div>
                                             <div className='flex mt-1 gap-1 flex-col'>

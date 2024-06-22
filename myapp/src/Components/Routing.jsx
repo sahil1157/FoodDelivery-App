@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from '../Screens/Home'
 import Menu from '../Screens/Menu'
@@ -9,13 +9,15 @@ import Options from './Menus/Options'
 import MyCart from './MyCart/MyCart'
 import { StoreContext } from './Context/ContextApi'
 import Payment from '../Screens/Payment'
+import Logout from '../Screens/Logout'
+import Profile from '../Screens/Profile'
+import Address from '../Screens/Address'
+import IndexChange from './MyProfile/ChangeProfile/IndexChange'
+import ChangePAssword from './MyProfile/ChangePassword/ChangePassword'
 
 const Routing = () => {
-    const {handleCardItems} = useContext(StoreContext)
-    const [showModal, setShowModal] = useState(false)
-    const [showSignup, setShowSignup] = useState(false)
-    const [showFilter, setShowFilter] = useState(false)
 
+    const { handleCardItems, showFilter, showModal, showSignup, setShowFilter, setShowModal, setShowSignup, check, logOut, setLogout } = useContext(StoreContext)
 
     return (
         <>
@@ -37,13 +39,22 @@ const Routing = () => {
                         <Options setShowFilter={setShowFilter} />
                     )
                 }
+                {
+                    logOut && (
+                        <Logout setLogout={setLogout} />
+                    )
+                }
                 <div>
-                    <Navbar onClick={() => setShowSignup(false)} onclick={() => setShowModal(false)} setShowModal={setShowModal} setShowSignup={setShowSignup} />
+                    <Navbar onClick={() => setShowSignup(false)} onclick={() => setShowModal(false)} setLogout={setLogout} setShowModal={setShowModal} setShowSignup={setShowSignup} check={check} />
                     <Routes>
-                        <Route exact path='/' element=<Home handleCardItems = {handleCardItems} /> />
-                        <Route exact path='/menu' element=<Menu setShowFilter={setShowFilter} handleCardItems = {handleCardItems} showFilter={showFilter} /> />
+                        <Route exact path='/' element=<Home handleCardItems={handleCardItems} /> />
+                        <Route exact path='/menu' element=<Menu setShowFilter={setShowFilter} handleCardItems={handleCardItems} showFilter={showFilter} /> />
                         <Route exact path='/mycart' element=<MyCart /> />
                         <Route exact path='/user/payment' element=<Payment /> />
+                        <Route exact path='/user/profile' element=<Profile setLogout={setLogout} /> />
+                        <Route exact path='/user/payment/address' element=<Address /> />
+                        <Route exact path='/user/profile/changeprofile' element=<IndexChange /> />
+                        <Route exact path='/user/profile/changepassword' element=<ChangePAssword /> />
                     </Routes>
                 </div>
             </div>

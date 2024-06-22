@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import AddCuttlery from './AddCuttlery'
 import { useNavigate } from 'react-router-dom'
+import { StoreContext } from '../Context/ContextApi'
 
-const CartItems = ({ totalAmount, quantity }) => {
+
+const CartItems = () => {
+  const { check,setShowModal, handleToastify,totalAmount } = useContext(StoreContext)
+  console.log(totalAmount)
   const navigate = useNavigate()
+
+  console.log(check)
+  const handleNavigate = () => {
+    if (check === true) {
+      navigate('/user/payment')
+    }
+    else {
+      navigate('/')
+      handleToastify()
+      setShowModal(true)
+    }
+  }
+
   return (
     <>
       <div style={{ paddingInline: '2%' }} className=' h-full flex items-start '>
@@ -11,7 +28,7 @@ const CartItems = ({ totalAmount, quantity }) => {
           <p className='text-lg font-semibold'>Overview Summary</p>
           <div className="flex flex-col gap-2 w-full">
             <div className="flex justify-between items-center">
-              <p className="text-md font-medium">Items</p>
+              <p className="text-md font-medium">Items price</p>
               <p className="text-md font-medium">${totalAmount}</p>
             </div>
             <div className="flex justify-between items-center">
@@ -34,7 +51,7 @@ const CartItems = ({ totalAmount, quantity }) => {
           </div>
           <AddCuttlery />
           <div className='w-full flex items-start h-full'>
-            <button onClick={() => navigate('/user/payment')} className='w-full hover:bg-red-700 h-12 rounded-lg bg-red-600 text-white '>
+            <button onClick={handleNavigate} className='w-full hover:bg-[#D2122E] bg-[#EF0107] h-12 rounded-lg text-white '>
               <p className='text-xl font-[600]'>Proceed to Checkout</p>
             </button>
           </div>

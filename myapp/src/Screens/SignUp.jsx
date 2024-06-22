@@ -1,12 +1,14 @@
 import Aos from 'aos';
 import "aos/dist/aos.css";
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { RxCross1 } from "react-icons/rx";
+import { toast } from 'react-toastify';
+
 
 const SignUp = ({ onClose, setShowModal, setShowSignUp }) => {
-  console.log(process.env.secretToken)
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -21,6 +23,9 @@ const SignUp = ({ onClose, setShowModal, setShowSignUp }) => {
     withCredentials: true
   })
 
+const handleSignupToast = () => {
+  toast.success("Signup Successful")
+}
   const handleShow = () => {
     setShow(!show);
   };
@@ -47,7 +52,7 @@ const SignUp = ({ onClose, setShowModal, setShowSignUp }) => {
       return;
     }
     try {
-      const response = await api.post("/user/signup", {
+      await api.post("/user/signup", {
         firstName,
         lastName,
         email,
@@ -55,12 +60,11 @@ const SignUp = ({ onClose, setShowModal, setShowSignUp }) => {
       });
       setShowSignUp(false);
       setShowModal(false);
-      console.log('response', response.headers)
+      handleSignupToast()
     } catch (err) {
       if (err.response && err.response.status === 400) {
         setError(err.response.data.message);
       } else {
-        console.error("An error occurred:", err);
         setError("An error occurred. Please try again.");
       }
     }
@@ -74,7 +78,7 @@ const SignUp = ({ onClose, setShowModal, setShowSignUp }) => {
   }, []);
 
   useEffect(() => {
-    Aos.init({ duration: 400 });
+    Aos.init({ duration: 200 });
   }, []);
 
   return (

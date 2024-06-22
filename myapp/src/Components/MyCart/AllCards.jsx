@@ -6,10 +6,12 @@ import { StoreContext } from '../Context/ContextApi'
 import emptyCart from '../../images/empty-cart.png'
 
 const AllCards = () => {
-    const { selectItems, quantity } = useContext(StoreContext)
-    const [totalAmount, setTotalAmount] = useState(0)
+    const { selectItems, quantity, setTotalAmount, totalAmount } = useContext(StoreContext)
+
+    // const [totalAmount, setTotalAmount] = useState(0)
 
     const handleTotal = (x) => {
+        localStorage.setItem('amt', JSON.stringify(x))
         setTotalAmount(x)
     }
 

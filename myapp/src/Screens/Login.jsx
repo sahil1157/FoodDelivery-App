@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { RxCross1 } from "react-icons/rx";
 import axios from 'axios';
 import Aos from 'aos';
 import { FaRegEye, FaEyeSlash } from "react-icons/fa";
-import { toast } from 'react-toastify'
+import { StoreContext } from '../Components/Context/ContextApi';
 
 const Login = ({ onClose, setShowSignup, setShowModal }) => {
   const [email, setEmail] = useState('');
@@ -12,17 +12,14 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
   const [error, setError] = useState('');
   axios.defaults.withCredentials = true
 
+  const { Toastify, setCheck } = useContext(StoreContext)
   useEffect(() => {
-    Aos.init({ duration: 400 });
+    Aos.init({ duration: 200 });
     document.body.style.overflowY = 'hidden';
     return () => {
       document.body.style.overflowY = 'scroll';
     };
   }, []);
-
-  const LoginSuccessful = () => {
-    toast.success('Login Successful')
-  }
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -36,10 +33,11 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
 
     try {
 
-      const response = await axios.post("http://localhost:5000/user/login", { email, password }, { withCredentials: true });
+      const response = await axios.post("http://localhost:5000/user/login", { email, password });
       console.log('Login Response:', response.data);
       setShowModal(false);
-      LoginSuccessful()
+      setCheck(true)
+      Toastify()
     } catch (err) {
       if (err.response) {
         setError(err.response.data.message || 'Login failed. Please check your credentials.');
@@ -54,13 +52,13 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
   };
 
   return (
-    <div style={{ paddingInline: '5%' }} data-aos='fade-up' className='fixed top-0 left-0 flex items-center z-20 justify-center w-full h-screen backdrop-blur-[2px] bg-opacity-40'>
+    <div style={{ paddingInline: '5%' }} data-aos='fade-up' className='fixed font-thin top-0 left-0 flex items-center z-20 justify-center w-full h-screen backdrop-blur-[2px] bg-opacity-40'>
       <div className='relative w-full md:w-1/3 bg-white rounded-xl border border-gray-400 p-6'>
         <button onClick={onClose} className='absolute top-4 right-4'>
           <RxCross1 size={25} />
         </button>
         <div className='text-center'>
-          <h2 className='text-2xl md:text-3xl font-semibold'>Already Registered?</h2>
+          <h2 className='text-2xl md:text-3xl font-thin'>Already Registered?</h2>
           <p className='text-xl md:text-2xl pt-2'>Login to GoFood!</p>
         </div>
         <form onSubmit={handleLogin} className='mt-6 space-y-4'>

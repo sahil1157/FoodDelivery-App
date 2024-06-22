@@ -27,7 +27,7 @@ const ModalBox = ({ setIsOpen, storeItem, handleCardItems }) => {
                         </button>
                         <div className='sm:flex-row flex flex-col w-full gap-3'>
                             <div>
-                                <img className='h-32 w-48 rounded-md' src={storeItem && url + '/images/' + storeItem.image} alt="" />
+                                <img className='h-32 w-44 md:w-56 rounded-md' src={storeItem && url + '/images/' + storeItem.image} alt="" />
                             </div>
                             <div className='flex w-full justify-between flex-row'>
                                 <div className='flex pt-3 flex-col'>

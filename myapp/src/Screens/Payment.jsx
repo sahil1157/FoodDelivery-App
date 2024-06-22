@@ -1,30 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useContext } from 'react';
 import Proceed from '../Components/payment/Proceed';
-import axios from 'axios';
-
-const api = axios.create({
-  baseURL: 'http://localhost:5000',
-  withCredentials: true,
-});
+import { StoreContext } from '../Components/Context/ContextApi';
+import Loading from './Loading';
 
 const Payment = () => {
-  useEffect(() => {
-    const fetchme = async () => {
-      try {
-        const result = await api.get('/user/payment');
-        console.log(result);
-      } catch (error) {
-        console.error('Error:', error.response ? error.response.data : error.message);
-        // Handle error - for example, show a notification to the user
-      }
-    };
-    fetchme();
-  }, []);
+  const { loading } = useContext(StoreContext)
 
   return (
-    <>
-      <Proceed />
-    </>
+    <div>
+      {
+        !loading && !loading ? (
+          <Proceed />
+        ) : (
+          <div className='flex w-full justify-center items-center h-screen'>
+            <Loading />
+          </div>
+        )
+      }
+    </div>
   );
 };
 

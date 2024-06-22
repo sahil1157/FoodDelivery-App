@@ -6,7 +6,7 @@ import Aos from 'aos';
 const MappedExploredMenus = ({ id, price, name, setIsOpen, setStoreData, description, image }) => {
     const { url } = useContext(StoreContext);
     useEffect(() => {
-        Aos.init({ duration: 400 })
+        Aos.init({ duration: 200 })
     }, [])
     return (
 

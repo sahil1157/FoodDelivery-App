@@ -5,7 +5,6 @@ const port = 5000;
 const cors = require('cors');
 const foodRouter = require('./Routing/FoodRouting');
 const userRoute = require('./Routing/userRouting.js');
-
 const cookieParser = require('cookie-parser');
 
 db();

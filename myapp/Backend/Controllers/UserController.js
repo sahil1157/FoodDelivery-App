@@ -135,13 +135,15 @@ const handleLogout = (req, res) => {
             httpOnly: true,
             sameSite: "None",
             expires: new Date(0),
-            partitioned: true
+            partitioned: true,
+            secure: true,
         })
         res.cookie('AccessToken', '', {
             httpOnly: true,
             sameSite: "None",
             expires: new Date(0),
-            partitioned: true
+            partitioned: true,
+            secure: true,
         })
         return res.status(200).json({ valid: false, message: 'Logged out successfully' })
     } catch (error) {

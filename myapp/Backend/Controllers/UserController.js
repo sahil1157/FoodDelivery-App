@@ -68,8 +68,8 @@ const handleUserLogin = async (req, res) => {
 
         const refreshToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '3d' })
 
-        res.cookie('AccessToken', accessToken, { httpOnly: true, sameSite: "None", secure: true });
-        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: "None", secure: true });
+        res.cookie('AccessToken', accessToken, { httpOnly: true, sameSite: "None", secure: true, partitioned: true });
+        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: "None", secure: true, partitioned: true });
 
         return res.json({ Login: true, accessToken, refreshToken })
 
@@ -118,7 +118,7 @@ const handleRefreshToken = async (req, res, next) => {
         jwt.verify(getRefreshToken, process.env.secretToken, (err, decoded) => {
             if (err) return res.status(400).json({ valid: false, message: "Error Occured while fetching refresh Token" })
             const newAccessToken = jwt.sign({ email: decoded.email }, process.env.secretToken, { expiresIn: '2d' })
-            res.cookie('AccessToken', newAccessToken, { httpOnly: true, sameSite: "None", secure: true })
+            res.cookie('AccessToken', newAccessToken, { httpOnly: true, sameSite: "None", secure: true, partitioned: true })
             return newAccessToken
         })
     }
@@ -134,12 +134,14 @@ const handleLogout = (req, res) => {
         res.cookie('RefreshToken', '', {
             httpOnly: true,
             sameSite: "None",
-            expires: new Date(0)
+            expires: new Date(0),
+            partitioned: true
         })
         res.cookie('AccessToken', '', {
             httpOnly: true,
             sameSite: "None",
-            expires: new Date(0)
+            expires: new Date(0),
+            partitioned: true
         })
         return res.status(200).json({ valid: false, message: 'Logged out successfully' })
     } catch (error) {

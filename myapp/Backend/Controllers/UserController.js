@@ -253,7 +253,6 @@ const changePassword = async (req, res) => {
         })
         // got email
         const getEmail = req.email
-        console.log(getEmail)
 
         // comparing and fetching email
         const fetchEmailFromDb = await users.findOne({ email: getEmail })

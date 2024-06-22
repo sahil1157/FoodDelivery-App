@@ -85,7 +85,7 @@ const handleSignupToast = () => {
     <div
       style={{ paddingInline: '5%' }}
       data-aos="fade-up"
-      className='fixed top-0 left-0 flex items-center z-20 justify-center w-full h-screen backdrop-blur-[2px] bg-opacity-40'
+      className='fixed top-0 left-0 flex items-center z-20 justify-center w-full h-screen backdrop-brightness-50 backdrop-blur-[2px] bg-opacity-40'
     >
       <div className=' w-full flex items-center justify-center '>
         <div className='box-border relative md:w-[30vw] w-full h-fit bg-white border-[1px] rounded-xl border-gray-400'>

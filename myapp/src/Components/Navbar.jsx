@@ -35,11 +35,11 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
           <Link to="/contact" className={`text-xl font-Ubuntu ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
           {
             check && check ? (
-              <button onClick={() => setLogout(true)} className={`block md:hidden font-Ubuntu px-4 text-lg h-10 w-24 rounded-full mr-2 ${activeLink === 'login' ? 'border-b-2 border-blue-500' : ''}`}>
+              <div onClick={() => setLogout(true)} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'login' ? 'text-neutral-500' : ''}`}>
                 Logout
-              </button>
+              </div>
             ) : (
-              <button onClick={() => { setShowModal(true); setActiveLink('login'); }} className={`block md:inline-hidden font-Ubuntu bg-white border-[1px] hover:border-slate-600 hover:text-black duration-300 text-green-500 px-4 text-lg h-10 w-24 rounded-full mr-2 ${activeLink === 'login' ? 'border-b-2 border-blue-500' : ''}`}>
+              <button onClick={() => setLogout(true)} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'login' ? 'text-neutral-500' : ''}`}>
                 Login
               </button>
             )

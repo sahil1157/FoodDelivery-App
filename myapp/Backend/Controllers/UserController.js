@@ -138,22 +138,16 @@ const handleLogout = (req, res) => {
     try {
         res.cookie('RefreshToken', '', {
             httpOnly: true,
-            sameSite: 'None',
+            sameSite: "None",
             expires: new Date(0),
             secure: true,
-            path: '/',
-            domain: 'gofood4real.netlify.app', // specify domain if required
-        });
+        })
         res.cookie('AccessToken', '', {
             httpOnly: true,
-            sameSite: 'None',
+            sameSite: "None",
             expires: new Date(0),
             secure: true,
-            path: '/',
-            domain: 'gofood4real.netlify.app', // specify domain if required
-        });
-
-
+        })
         return res.status(200).json({ valid: false, message: 'Logged out successfully' })
     } catch (error) {
         res.status(400).json({ valid: false, message: 'Logged out session failed' })

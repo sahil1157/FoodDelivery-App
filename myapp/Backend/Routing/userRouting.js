@@ -10,5 +10,4 @@ router.get('/profile', handleVerifyUsers, handleUserDetalis)
 router.put('/changeprofile', editUserProfile)
 router.get('/getemail', handleVerifyUsers, findEmail)
 router.put('/changepassword', changePassword)
-// router.get('/search/:key', getSearchDatas)
 module.exports = router

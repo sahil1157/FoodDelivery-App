@@ -2,7 +2,7 @@ const users = require('../Model/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
-
+const { foodModel } = require('../Model/FoodModel/FoodItems')
 
 
 // User Signup Handler
@@ -53,6 +53,7 @@ const handleUserSignup = async (req, res) => {
 
 // User Login Handler....
 const handleUserLogin = async (req, res) => {
+    // getting userdetails from user
     const { email, password } = req.body;
 
     try {
@@ -82,6 +83,7 @@ const handleUserLogin = async (req, res) => {
 
 
 const handleVerify = async (req, res, next) => {
+    // getting access and refresh token stored after login, inside cookieStorage
     const getAccessToken = req.cookies.AccessToken
     const getRefreshToken = req.cookies.RefreshToken
 
@@ -110,7 +112,7 @@ const handleVerify = async (req, res, next) => {
 }
 
 
-// Refreshes token if expired
+// Refreshes token if expired. This funtion will be called incase the RefreshToken is expired.
 const handleRefreshToken = async (req, res, next) => {
     const getRefreshToken = req.cookies.RefreshToken
     try {
@@ -132,6 +134,7 @@ const handleRefreshToken = async (req, res, next) => {
 
 
 const handleLogout = (req, res) => {
+    // loggin out by clearing all the caches and datas inside cookies...
     try {
         res.cookie('RefreshToken', '', {
             httpOnly: true,
@@ -159,12 +162,14 @@ const handleVerifyUsers = async (req, res, next) => {
     const getRefreshToken = req.cookies.RefreshToken
 
     try {
+        // if no refreshToken then the user is not valid or the time of logging in is expired, so need to login again.
         if (!getRefreshToken) {
             const deleteTokens = await handleLogout(req, res)
             if (deleteTokens) return
         }
         else if (!getAccessToken && !getRefreshToken) return res.status(400).json({ message: "No tokens found, please login again", valid: false })
 
+        // if no access Token then handleFrefreshToken functn will be called and will assign a new accesstokwn
         else if (!getAccessToken) {
             const getAccessToken = await handleRefreshToken(req, res)
             if (!getAccessToken) return false
@@ -203,6 +208,7 @@ const handleUserDetalis = async (req, res) => {
 
 // edit user profile
 const editUserProfile = async (req, res) => {
+    // getting user details to chage except password
     const { firstname, lastname, password } = req.body
     const refreshToken = req.cookies.RefreshToken
     try {
@@ -229,6 +235,7 @@ const editUserProfile = async (req, res) => {
 
 // find email and give to findEmail function
 const findEmail = async (req, res) => {
+    // finding email with the use of jwt, which will decode cookies and will give back the email that was assigned during formation of cookies (Payload)...
     const refreshToken = req.cookies.RefreshToken
     if (!refreshToken) {
         const logout = await handleLogout()
@@ -239,7 +246,7 @@ const findEmail = async (req, res) => {
             if (err) return res.status(400).json({ valid: false, message: "Email not found" })
             req.email = decoded.email
             const getEmail = req.email
-            return res.status(200).json({ valid: true, message: getEmail })
+            return res.status(200).json({ valid: true, message: 'email found', email: getEmail })
         })
     } catch (error) {
         res.status(400).json({ valid: false, message: "No cookies found" })
@@ -262,7 +269,6 @@ const changePassword = async (req, res) => {
 
         // comparing and fetching email
         const fetchEmailFromDb = await users.findOne({ email: getEmail })
-        console.log(fetchEmailFromDb.email)
 
         if (!fetchEmailFromDb) return res.status(400).json({ valid: false, message: "Email not found" })
         if (fetchEmailFromDb.email !== email)
@@ -285,6 +291,7 @@ const changePassword = async (req, res) => {
     }
 }
 
+
 module.exports = {
     handleUserSignup,
     handleUserLogin,
@@ -295,6 +302,6 @@ module.exports = {
     handleVerifyUsers,
     editUserProfile,
     findEmail,
-    changePassword
+    changePassword,
 };
 

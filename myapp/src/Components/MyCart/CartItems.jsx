@@ -9,7 +9,6 @@ const CartItems = () => {
   console.log(totalAmount)
   const navigate = useNavigate()
 
-  console.log(check)
   const handleNavigate = () => {
     if (check === true) {
       navigate('/user/payment')
@@ -23,8 +22,8 @@ const CartItems = () => {
 
   return (
     <>
-      <div style={{ paddingInline: '2%' }} className=' h-full flex items-start '>
-        <div className='p-5  h-fit border-[1px] shadow-lg rounded-lg w-full md:max-w-[550px] flex gap-5 flex-col'>
+      <div className=' h-full w-full flex items-start px-0'>
+        <div className='sm:p-5 p-2 h-fit border-[1px] shadow-lg rounded-lg w-full lg:max-w-[550px] flex gap-5 flex-col'>
           <p className='text-lg font-semibold'>Overview Summary</p>
           <div className="flex flex-col gap-2 w-full">
             <div className="flex justify-between items-center">
@@ -52,7 +51,7 @@ const CartItems = () => {
           <AddCuttlery />
           <div className='w-full flex items-start h-full'>
             <button onClick={handleNavigate} className='w-full hover:bg-[#D2122E] bg-[#EF0107] h-12 rounded-lg text-white '>
-              <p className='text-xl font-[600]'>Proceed to Checkout</p>
+              <p className='text-md sm:text-xl font-[600]'>Proceed to Checkout</p>
             </button>
           </div>
         </div>

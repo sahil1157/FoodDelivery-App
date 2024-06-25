@@ -14,7 +14,7 @@ const About = () => {
         <div className='md:pt-12 w-full flex-col justify-between mx-auto lg:text-start text-center lg:flex-row flex'>
             <div data-aos='fade-right' className='flex flex-col pt-10 gap-2'>
                 <p className='text-4xl md:text-6xl font-Ubuntu text-red-600'>Go Food</p>
-                <p className='text-3xl pt-3 font-semibold'>Is the best delivery service near you</p>
+                <p className='text-3xl pt-2 font-semibold'>Is the best delivery service near you</p>
                 <p className='text-lg max-w-[550px] font-Ubuntu mx-auto lg:mx-0 lg:pt-2 pt-5 text-gray-500'>We make food delivery more interesting. Find the greatest deals from the restaurants near you. Tasty & healthy dishes. Bring a restaurant into your home. </p>
 
                 <div className='pt-4 flex lg:justify-start justify-center'>
@@ -24,7 +24,7 @@ const About = () => {
                     </button>
                 </div>
             </div>
-            <div data-aos='fade-left' className='lg:justify-end lg:pt-0 pt-4 justify-center flex'>
+            <div data-aos='fade-left' className='lg:justify-end lg:pt-0 pt-7 justify-center flex'>
                 <img className='md:max-w-[600px]' src={sideImg} alt="" />
             </div>
         </div>

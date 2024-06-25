@@ -14,4 +14,37 @@
   }
 }
 
+ .clipped-image {
+  @apply object-cover h-full w-full;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+} 
+
+/* @media (min-width: 1024px) {
+  .clipped-image {
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 60%);
+  }
+} */
+
+ @media (max-width: 540px) {
+  .clipped-image {
+    clip-path: none;
+  }
+} 
+
+
+@keyframes scrollGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.gradient-overlay {
+  background: linear-gradient(90deg, rgba(255,0,0,0.5), rgba(0,0,0,0.5));
+  background-size: 200% 100%;
+  animation: scrollGradient 2s linear infinite;
+  mix-blend-mode: screen; /* Ensures the gradient doesn't hide the image */
+}
 

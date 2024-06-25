@@ -14,7 +14,7 @@ const BoxComp = ({ handleTotal }) => {
     return (
         <>
             <div className='w-full md:max-w-[670px] overflow-scroll border-[1px] shadow-lg h-full max-h-[300px] rounded-lg'>
-                <div className='flex p-7 gap-3 flex-col'>
+                <div className='flex p-2 sm:p-7 gap-3 flex-col'>
                     {
                         selectItems && selectItems.map((item, ind) => {
                             amount += item.price * item.quantity;
@@ -31,7 +31,7 @@ const BoxComp = ({ handleTotal }) => {
                                                 <p className='font-semibold text-md'>${item.price * item.quantity}</p>
                                             </div>
                                         </div>
-                                        <AddDelete item={item} />
+                                        <AddDelete item={item} className={'flex'} />
                                     </div>
                                     <hr className='border-[1px] border-gray-300' />
                                 </div>

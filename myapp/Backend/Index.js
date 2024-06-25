@@ -10,6 +10,7 @@ const userRoute = require('./Routing/userRouting.js');
 const cookieParser = require('cookie-parser');
 
 db();
+// app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(cors({ origin: 'https://gofood4real.netlify.app', credentials: true }));
 app.use(express.json());
 app.use(cookieParser());

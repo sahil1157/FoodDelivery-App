@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { AiOutlineClose } from 'react-icons/ai';
 import { IoIosSearch } from "react-icons/io";
-
 const Search = () => {
+
     return (
         <div className='absolute bottom-16 flex opacity-100'>
             <div className="relative flex gap-2 h-12">

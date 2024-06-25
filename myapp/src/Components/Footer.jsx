@@ -1,31 +1,50 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import androidImg from '../images/get.png';
+import iosImg from '../images/App-Store-Symbol.png';
 
 const Footer = () => {
+  
   return (
-    <div className='top-[100%] pt-16 sticky '>
-      <footer className="bg-white rounded-t-2xl shadow dark:bg-gray-800">
-        <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/" className="hover:underline">Flowbite™</a>. All Rights Reserved.
-          </span>
-          <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-            <li>
-              <Link to="/about" className="hover:underline me-4 md:me-6">About</Link>
-            </li>
-            <li>
-              <Link to="/privacyP" className="hover:underline me-4 md:me-6">Privacy Policy</Link>
-            </li>
-            <li>
-              <Link to="/liscence" className="hover:underline me-4 md:me-6">Licensing</Link>
-            </li>
-            <li>
-              <Link to="/contact" className="hover:underline">Contact</Link>
-            </li>
-          </ul>
+    <footer className="bg-orange-500 flex w-full h-fit mt-6 text-white py-10">
+      <div className=" px-[5%] container mx-auto">
+        <div className="grid grid-cols-2 md:flex md:flex-row gap-8 lg:justify-evenly ">
+          <div className="w-full md:w-fit mb-6 md:mb-0">
+            <h2 className="text-xl font-bold mb-4">Our Company</h2>
+            <ul className="flex flex-col space-y-2">
+              <li><Link className="hover:underline">About Us</Link></li>
+              <li><Link className="hover:underline">Career</Link></li>
+              <li><Link className="hover:underline">FAQ</Link></li>
+            </ul>
+          </div>
+          <div className="w-full md:w-fit mb-6 md:mb-0">
+            <h2 className="text-xl font-bold mb-4">Contact</h2>
+            <ul className="flex flex-col space-y-2">
+              <li><Link className="hover:underline">Help & Support</Link></li>
+              <li><Link className="hover:underline">Become Our Partner</Link></li>
+            </ul>
+          </div>
+          <div className="w-full md:w-fit mb-6 md:mb-0">
+            <h2 className="text-xl font-bold mb-4">Legal</h2>
+            <ul className="flex flex-col space-y-2">
+              <li><Link className="hover:underline">Terms and Conditions</Link></li>
+              <li><Link className="hover:underline">Privacy and Policy</Link></li>
+            </ul>
+          </div>
+          <div className="w-full md:w-fit mb-6 md:mb-0">
+            <h2 className="text-xl font-bold mb-4">Nepal's Favourite Foodie App</h2>
+            <div className="flex w-full flex-col space-y-2">
+              <img src={androidImg} alt="Download on Android" className="w-32 bg-none rounded-lg h-10 bg-transparent" />
+              <img src={iosImg} alt="Download on iOS" className="w-32" />
+            </div>
+          </div>
         </div>
-      </footer>
-    </div>
-  )
-}
+        <div className="text-center mt-8 text-gray-200 text-sm">
+          &copy; 2023 Gofood. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  );
+};
 
-export default Footer
+export default Footer;

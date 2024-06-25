@@ -1,17 +1,19 @@
-import React, { useContext } from 'react'
-import Routing from './Components/Routing'
-import { StoreContext } from './Components/Context/ContextApi'
-import Footer from './Components/Footer'
+import React, { useContext } from 'react';
+import Routing from './Components/Routing';
+import { StoreContext } from './Components/Context/ContextApi';
+import Footer from './Components/Footer';
 
 const App = () => {
-  const { check } = useContext(StoreContext)
+  const { check } = useContext(StoreContext);
 
   return (
-    <div className='flex flex-col min-h-screen'>
-      <Routing check={check} />
+    <div className='flex flex-col gap-7 h-full justify-between'>
+      <div className='flex-grow'>
+        <Routing check={check} />
+      </div>
       <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

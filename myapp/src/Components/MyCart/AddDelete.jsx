@@ -1,11 +1,9 @@
 import React, { useContext } from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa6';
-import { ImBin2 } from "react-icons/im";
 import { StoreContext } from '../Context/ContextApi';
 import { RiDeleteBin6Line } from "react-icons/ri";
-import Payment from '../../Screens/Payment';
 
-const AddDelete = ({ item }) => {
+const AddDelete = ({ item, className }) => {
     const { incrementQuantity, handleCardItems, setSelectItems } = useContext(StoreContext);
 
     const handleIncrement = () => {
@@ -29,7 +27,7 @@ const AddDelete = ({ item }) => {
         <>
             <div className='flex flex-row gap-3'>
                 <button
-                    className='w-6 text-white justify-center h-6 items-center flex rounded-full hover:bg-gray-600 bg-gray-500'
+                    className={`w-6 text-white justify-center h-6 items-center  ${className} rounded-full hover:bg-gray-600 bg-gray-500`}
                     onClick={handleDecrement}
                 >
                     {
@@ -39,13 +37,26 @@ const AddDelete = ({ item }) => {
                     }
                 </button>
                 <p className='text-xl -mt-1'>{item.quantity}</p>
-                <button
-                    onClick={handleIncrement}
-                    className='w-6 text-white hover:bg-red-700 justify-center h-6 items-center flex rounded-full bg-red-600'
-                >
-                    <FaPlus size={13} />
-                </button>
-                
+                {
+                    className && className === 'hidden' ? (
+                        <div className='w-full h-full items-end flex'>
+                            <button
+                                onClick={handleIncrement}
+                                className='w-6 text-white hover:bg-red-700 justify-center h-6 items-center flex rounded-full bg-red-600'
+                            >
+                                <FaPlus size={13} />
+                            </button>
+                        </div>
+                    ) : (
+                        <button
+                            onClick={handleIncrement}
+                            className='w-6 text-white hover:bg-red-700 justify-center h-6 items-center flex rounded-full bg-red-600'
+                        >
+                            <FaPlus size={13} />
+                        </button>
+                    )
+                }
+
             </div>
         </>
     );

@@ -11,7 +11,8 @@ const Changeprofile = () => {
     const navigate = useNavigate()
 
     const api = axios.create({
-        baseURL: 'https://fooddelivery-backend-varr.onrender.com',
+        baseURL: 'http://localhost:5000',
+        // baseURL: 'https://fooddelivery-backend-varr.onrender.com',
         withCredentials: true
     })
 

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 export const StoreContext = createContext(null);
 
 const api = axios.create({
+    // baseURL: 'http://localhost:5000',
     baseURL: 'https://fooddelivery-backend-varr.onrender.com',
     withCredentials: true,
 });
@@ -28,6 +29,7 @@ const StoreContextProvider = (props) => {
     const navigate = useNavigate();
 
     const url = "https://fooddelivery-backend-varr.onrender.com";
+    // const url = "http://localhost:5000";
 
     // Toast notifications
     const handleToastify = () => {
@@ -260,15 +262,32 @@ const StoreContextProvider = (props) => {
                 const getEmail = await api.get('/user/getemail', {
                     withCredentials: true
                 })
-                setStoreEmail(getEmail.data.message)
+                setStoreEmail(getEmail.data.email)
             } catch (error) {
                 console.log(error)
             }
         }
         findEmail()
 
-    }, [])
+    }, [check, navigate])
+
+    // Searching on the bascis of search in MenuItems
+    const [inputVal, setInputVal] = useState()
+
+    useEffect(() => {
+        const searchItems = food_list.filter(x => {
+            const nameMatch = x.name.toLowerCase().includes(inputVal.toLowerCase());
+            const categoryMatch = x.category.toLowerCase().includes(inputVal.toLowerCase());
+            return (nameMatch || categoryMatch)
+        })
+        setSortByPrice(searchItems)
+    }, [inputVal])
+
+
     const contextValue = {
+        api,
+        inputVal,
+        setInputVal,
         setTotalAmount,
         totalAmount,
         food_list,

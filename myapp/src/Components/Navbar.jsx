@@ -35,11 +35,11 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
           <Link to="/contact" className={`text-xl font-Ubuntu ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
           {
             check && check ? (
-              <div onClick={() => setLogout(true)} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'login' ? 'text-neutral-500' : ''}`}>
+              <div onClick={() => setLogout(true)} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'logout' ? 'text-neutral-500' : ''}`}>
                 Logout
               </div>
             ) : (
-              <button onClick={() => setLogout(true)} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'login' ? 'text-neutral-500' : ''}`}>
+              <button onClick={() => setShowModal(true)} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'login' ? 'text-neutral-500' : ''}`}>
                 Login
               </button>
             )
@@ -49,10 +49,10 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
       </div>
 
       {/* Navbar */}
-      <div className="flex justify-between items-center h-16 px-4 md:px-8 lg:px-16">
+      <div className="flex text-white justify-between items-center h-16 px-4 md:px-8 lg:px-16">
         <div className="flex w-full justify-between items-center">
           <div className='flex flex-row gap-4'>
-            <button onClick={() => handleLinkClick('/')} className={`text-3xl md:text-3xl font-bold`}>GoFood</button>
+            <button onClick={() => handleLinkClick('/')} className={`text-3xl font-Ubuntu md:text-3xl font-bold`}>GoFood</button>
             <div className='hidden lg:flex lg:flex-row ml-16 flex-row items-center gap-7'>
               <Link to="/menu" className={`text-xl font-Ubuntu ${activeLink === '/menu' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/menu')}>menu</Link>
               <Link to="/contact" className={`text-xl font-Ubuntu ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
@@ -86,7 +86,7 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
                     <ButtonProfile />
                   </div>
                 ) : (
-                  <button onClick={() => { setShowModal(true); setActiveLink('login'); }} className={`hidden md:inline-block font-Ubuntu bg-white border-[1px] hover:border-slate-600 hover:text-black duration-300 text-green-500 px-4 text-lg h-10 w-24 rounded-full mr-2 ${activeLink === 'login' ? 'border-b-2 border-blue-500' : ''}`}>
+                  <button onClick={() => { setShowModal(true); setActiveLink('login'); }} className={`hidden md:inline-block font-Ubuntu bg-[#2d2c2c] hover:border-slate-600 hover:text-white duration-300 text-[#fd0] px-4 text-md font-[00] h-9 w-20 rounded-md mr-2`}>
                     Login
                   </button>
                 )

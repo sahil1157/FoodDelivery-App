@@ -5,7 +5,7 @@ const AddCuttlery = () => {
     return (
         <>
             <div className='w-full p-2 flex gap-3 h-fit shadow-xl rounded-md'>
-                <div className=''>
+                <div className='hidden sm:flex'>
                     <GiForkKnifeSpoon className='text-red-600' size={30} />
                 </div>
                 <div className='flex flex-row justify-between w-full'>
@@ -22,8 +22,6 @@ const AddCuttlery = () => {
                         />
                     </div>
                 </div>
-
-
             </div>
         </>
     )

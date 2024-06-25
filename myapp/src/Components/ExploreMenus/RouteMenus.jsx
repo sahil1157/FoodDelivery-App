@@ -10,7 +10,7 @@ const RouteMenus = () => {
 // 
     return (
         <>
-            <div className='lg:grid md:grid lg:grid-cols-4 sm:grid sm:grid-cols-2 flex-col flex gap-8 justify-center items-center w-full'>
+            <div className='lg:flex md:flex lg:flex-wrap lg:gap-6 flex flex-row overflow-x-scroll md:flex-wrap gap-8 justify-start md:justify-evenly lg:justify-start w-full'>
                 {
                     sortByMenus && sortByMenus.map((x, ind) => {
                         return (

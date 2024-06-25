@@ -30,7 +30,7 @@ const Explore = ({ activeLink, setActiveLink }) => {
 
                         return (
                                 <div onClick={() => sortByMenu(x.name)} key={x.id || ind} onMouseLeave={() => setActiveLink('')} onMouseOver={() => setActiveLink(ind)} className='flex cursor-default lg:cursor-pointer text-center flex-col gap-2'>
-                                    <div className={`relative ${activeLink === ind ? 'border-[3px] border-red-500' : ""}  rounded-full w-32 h-32 overflow-hidden`} >
+                                    <div className={`relative ${activeLink === ind ? 'border-[3px] border-slate-500' : ""}  rounded-full md:w-32 w-24 h-24 md:h-32 overflow-hidden`} >
                                         <img className='transition-transform duration-500 transform hover:scale-110' src={x.menu_image} alt="" />
                                     </div>
                                     <p className={`text-xl font-medium font-Ubuntu ${activeLink === ind && 'text-red-500'} text-gray-600`}>{x.menu_name}</p>

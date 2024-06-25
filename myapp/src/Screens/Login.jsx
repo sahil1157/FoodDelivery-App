@@ -12,7 +12,7 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
   const [error, setError] = useState('');
   axios.defaults.withCredentials = true
 
-  const { Toastify, setCheck } = useContext(StoreContext)
+  const { Toastify, setCheck, api } = useContext(StoreContext)
   useEffect(() => {
     Aos.init({ duration: 200 });
     document.body.style.overflowY = 'hidden';
@@ -33,9 +33,8 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
 
     try {
 
-      const response = await axios.post("https://fooddelivery-backend-varr.onrender.com/user/login",
+      const response = await api.post('/user/login',
         { email, password },
-        { withCredentials: true }
 
       );
       console.log('Login Response:', response.data);

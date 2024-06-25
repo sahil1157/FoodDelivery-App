@@ -5,11 +5,11 @@ import MenuItems from './MenuItems';
 import AOS from 'aos';
 import { StoreContext } from '../Context/ContextApi';
 import MainCart from '../AddToCart/MainCart';
-const AllMenus = ({ setShowFilter ,handleCardItems}) => {
-    const { Default, sortByVeg, storeData,setStoreData,handleSorting, sortByDeserts, sortByPrice, } = useContext(StoreContext)
+const AllMenus = ({ setShowFilter, handleCardItems }) => {
+
+    const { Default, sortByVeg, storeData, setStoreData, handleSorting, sortByDeserts, sortByPrice, setInputVal } = useContext(StoreContext)
     const [current, setCurrent] = useState();
     const [isOpen, setIsOpen] = useState(false)
-    
 
     const menu = [
         {
@@ -30,22 +30,18 @@ const AllMenus = ({ setShowFilter ,handleCardItems}) => {
         }
     ];
 
-    useEffect(() => {
-        AOS.init({ duration: 200 });
-    }, []);
-
 
     return (
         <>
             <div data-aos='fade-up' className='relatve flex h-full relative w-full pt-8 flex-col gap-6 '>
                 <p className='text-3xl text-red-500 mx-auto font-Ubuntu font-light'>Order Now</p>
                 <div className=' justify-center flex'>
-                    <form className='relative flex justify-center items-center' action="">
-                        <input type="text" placeholder='Search Items' className='w-full md:w-[40vw] outline-none text-xl text-gray-700 p-4 placeholder:text-xl font-light placeholder:font-Ubuntu rounded-md border-[1px] border-gray-400 h-12' />
+                    <div className='relative flex justify-center items-center' action="">
+                        <input onChange={(e) => setInputVal(e.target.value)} type="text" placeholder='Search Items' className='w-full md:w-[40vw] outline-none text-xl text-gray-700 p-4 placeholder:text-xl font-light placeholder:font-Ubuntu rounded-md border-[1px] border-gray-400 h-12' />
                         <button className='absolute text-gray-400 right-4 items-center justify-center'>
                             <CiSearch size={30} />
                         </button>
-                    </form>
+                    </div>
                 </div>
                 <div>
                     <p className='text-2xl lg:text-start text-center font-light text-gray-500 font-Ubuntu'>Filters:</p>

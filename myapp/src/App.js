@@ -7,7 +7,7 @@ const App = () => {
   const { check } = useContext(StoreContext);
 
   return (
-    <div className='flex flex-col gap-7 h-full justify-between'>
+    <div className='flex flex-col gap-7 min-h-[100vh] justify-between'>
       <div className='flex-grow'>
         <Routing check={check} />
       </div>

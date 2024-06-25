@@ -25,3 +25,5 @@ app.use('/image', express.static('uploads'));
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });
+
+  

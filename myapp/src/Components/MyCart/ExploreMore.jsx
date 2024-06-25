@@ -1,15 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { FaPlus } from 'react-icons/fa6';
 
 import { StoreContext } from '../Context/ContextApi';
 import { assets } from '../assets/assets';
-// import AddDelete from './AddDelete';
 
 
 const ExploreMore = ({ handleTotal }) => {
 
-  const { food_list, url,handleCardItems,quantity } = useContext(StoreContext);
-
+  const { food_list, url,handleCardItems } = useContext(StoreContext);
+  let quantity = 1
 
   return (
     <div className='w-full p-5 md:max-w-[670px] border-[1px] shadow-lg h-[200px] rounded-lg flex flex-col'>

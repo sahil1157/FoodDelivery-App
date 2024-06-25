@@ -6,7 +6,6 @@ import { StoreContext } from '../Context/ContextApi'
 
 const CartItems = () => {
   const { check,setShowModal, handleToastify,totalAmount } = useContext(StoreContext)
-  console.log(totalAmount)
   const navigate = useNavigate()
 
   const handleNavigate = () => {

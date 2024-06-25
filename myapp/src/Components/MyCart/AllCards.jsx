@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import AddItems from './AddItems'
 import ExploreMore from './ExploreMore'
 import CartItems from './CartItems'

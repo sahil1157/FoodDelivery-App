@@ -214,7 +214,7 @@ const StoreContextProvider = (props) => {
                 setAddress(location);
                 localStorage.setItem('address', JSON.stringify(location));
             } else {
-                console.error('No results found for the given coordinates.');
+                // console.error('No results found for the given coordinates.');
             }
         } catch (error) {
             // console.log("Error fetching address:", error);
@@ -234,7 +234,7 @@ const StoreContextProvider = (props) => {
                             getCurrentUserLocation(latitude, longitude);
                         },
                         (err) => {
-                            console.log("Geolocation error:", err);
+                            // console.log("Geolocation error:", err);
                         }
                     );
                 } else {

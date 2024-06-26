@@ -35,16 +35,16 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
           <Link to="/contact" className={`text-xl font-Ubuntu ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
           {
             check && check ? (
-              <div onClick={() => setLogout(true)} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'logout' ? 'text-neutral-500' : ''}`}>
+              <div onClick={() => { setLogout(true); setIsSidebarOpen(false) }} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'logout' ? 'text-neutral-500' : ''}`}>
                 Logout
               </div>
             ) : (
-              <button onClick={() => setShowModal(true)} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'login' ? 'text-neutral-500' : ''}`}>
+              <button onClick={() => { setShowModal(true); setIsSidebarOpen(false) }} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'login' ? 'text-neutral-500' : ''}`}>
                 Login
               </button>
             )
           }
-          <Link to="/mycart" className={`text-xl font-Ubuntu mb-4 ${activeLink === '/cart' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/cart')}>cart</Link>
+          {/* <Link to="/mycart" className={`text-xl font-Ubuntu mb-4 ${activeLink === '/cart' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/cart')}>cart</Link> */}
         </div>
       </div>
 
@@ -58,12 +58,18 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
               <Link to="/contact" className={`text-xl font-Ubuntu ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
             </div>
           </div>
-          <div className="md:hidden ml-4">
-            <button onClick={() => setIsSidebarOpen(true)}>
+          <div className="md:hidden items-center justify-end text-end flex flex-row-reverse gap-6 w-full ml-4">
+            <button className='mr-2' onClick={() => setIsSidebarOpen(true)}>
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
               </svg>
             </button>
+            <div onClick={() => handleLinkClick('/mycart')} className='flex items-end justify-end relative w-full'>
+              <FaCartShopping size={20} />
+              {
+                selectItems.length > 0 && <p className='absolute -right-3 w-2 h-2 rounded-full bg-red-600 flex top-0'></p>
+              }
+            </div>
           </div>
         </div>
 
@@ -76,7 +82,7 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
               }
             </div>
           </button>
-          <div className='w-full px-3'>
+          <div className='w-full  px-3'>
             {
               loading && loading ? (
                 <Loading />

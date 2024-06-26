@@ -3,11 +3,12 @@ import { FaPlus } from 'react-icons/fa6';
 
 import { StoreContext } from '../Context/ContextApi';
 import { assets } from '../assets/assets';
+import Loading from '../../Screens/Loading';
 
 
-const ExploreMore = ({ handleTotal }) => {
+const ExploreMore = () => {
 
-  const { food_list, url,handleCardItems } = useContext(StoreContext);
+  const { food_list, url, handleCardItems } = useContext(StoreContext);
   let quantity = 1
 
   return (
@@ -15,30 +16,36 @@ const ExploreMore = ({ handleTotal }) => {
       <div>
         <p className='text-lg font-[400] font-Ubuntu text-black'>You may also Like!</p>
       </div>
-      <div className='flex flex-row gap-9 mt-5 overflow-x-scroll'>
+      <div className='flex w-full items-center h-full justify-center flex-row gap-9 mt-5 overflow-x-scroll'>
         {
-          food_list && food_list.map((item, ind) => {
-            return (
-              <div key={ind} className='flex min-w-[250px] sm:min-w-[300px] flex-col gap-4'>
-                <div className='w-full h-fit flex flex-row justify-between'>
-                  <div className='flex flex-row gap-3'>
-                    <div className='w-28 h-28 sm:h-20'>
-                      <img className='rounded-xl w-full h-full' src={url + '/images/' + item.image} alt="" />
+          food_list && food_list ? (
+            food_list && food_list.map((item, ind) => {
+              return (
+                <div key={ind} className='flex min-w-[250px] sm:min-w-[300px] flex-col gap-4'>
+                  <div className='w-full h-fit flex flex-row justify-between'>
+                    <div className='flex flex-row gap-3'>
+                      <div className='w-28 h-28 sm:h-20'>
+                        <img className='rounded-xl w-full h-full' src={url + '/images/' + item.image} alt="" />
+                      </div>
+                      <div className='flex mt-1 sm:p-0 p-1 gap-1 flex-col'>
+                        <p className='font-semibold'>{item.name}</p>
+                        <img className='rating w-[65px]' src={assets.rating_starts} alt="" />
+                        <p className='font-semibold text-md'>${item.price}</p>
+                      </div>
                     </div>
-                    <div className='flex mt-1 sm:p-0 p-1 gap-1 flex-col'>
-                      <p className='font-semibold'>{item.name}</p>
-                      <img className='rating w-[65px]' src={assets.rating_starts} alt="" />
-                      <p className='font-semibold text-md'>${item.price}</p>
-                    </div>
+                    <button onClick={() => handleCardItems({ ...item, quantity })} className='h-full items-end flex '>
+                      <FaPlus size={21} className='text-red-500' />
+                    </button>
                   </div>
-                  <button onClick={() => handleCardItems({...item,quantity})} className='h-full items-end flex '>
-                    <FaPlus size={21} className='text-red-500' />
-                  </button>
+                  <hr className='border-[1px] border-gray-300' />
                 </div>
-                <hr className='border-[1px] border-gray-300' />
-              </div>
-            );
-          })
+              );
+            })
+          ) : <div>
+            <div className='h-full flex justify-center items-center'>
+              <Loading />
+            </div>
+          </div>
         }
       </div>
     </div>

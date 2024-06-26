@@ -5,16 +5,16 @@ import { toast } from 'react-toastify'
 import { StoreContext } from '../../Context/ContextApi';
 
 const Changeprofile = () => {
-    const {storeEmail} = useContext(StoreContext)
+    const {storeEmail,api} = useContext(StoreContext)
 
     const [error, setError] = useState()
     const navigate = useNavigate()
 
-    const api = axios.create({
-        // baseURL: 'http://localhost:5000',
-        baseURL: 'https://fooddelivery-backend-varr.onrender.com',
-        withCredentials: true
-    })
+    // const api = axios.create({
+    //     // baseURL: 'http://localhost:5000',
+    //     baseURL: 'https://fooddelivery-backend-varr.onrender.com',
+    //     withCredentials: true
+    // })
 
     const [inputVal, setInputVal] = useState({
         firstname: "",

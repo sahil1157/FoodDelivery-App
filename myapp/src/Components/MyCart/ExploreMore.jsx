@@ -16,7 +16,7 @@ const ExploreMore = () => {
       <div>
         <p className='text-lg font-[400] font-Ubuntu text-black'>You may also Like!</p>
       </div>
-      <div className='flex w-full items-center h-full justify-center flex-row gap-9 mt-5 overflow-x-scroll'>
+      <div className='flex w-full h-full justify-start flex-row gap-9 mt-5 overflow-x-scroll'>
         {
           food_list && food_list ? (
             food_list && food_list.map((item, ind) => {
@@ -24,7 +24,7 @@ const ExploreMore = () => {
                 <div key={ind} className='flex min-w-[250px] sm:min-w-[300px] flex-col gap-4'>
                   <div className='w-full h-fit flex flex-row justify-between'>
                     <div className='flex flex-row gap-3'>
-                      <div className='w-28 h-28 sm:h-20'>
+                      <div className='w-28 h-24 sm:h-20'>
                         <img className='rounded-xl w-full h-full' src={url + '/images/' + item.image} alt="" />
                       </div>
                       <div className='flex mt-1 sm:p-0 p-1 gap-1 flex-col'>

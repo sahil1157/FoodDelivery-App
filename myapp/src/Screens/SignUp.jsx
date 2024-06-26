@@ -1,10 +1,10 @@
 import Aos from 'aos';
 import "aos/dist/aos.css";
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { RxCross1 } from "react-icons/rx";
 import { toast } from 'react-toastify';
+import { StoreContext } from '../Components/Context/ContextApi';
 
 const SignUp = ({ onClose, setShowModal, setShowSignUp }) => {
   const [firstName, setFirstName] = useState("");
@@ -15,12 +15,7 @@ const SignUp = ({ onClose, setShowModal, setShowSignUp }) => {
   const [show, setShow] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [error, setError] = useState("");
-
-  const api = axios.create({
-    baseURL: 'http://localhost:5000',
-    // baseURL: 'https://fooddelivery-backend-varr.onrender.com',
-    withCredentials: true
-  });
+const {api} = useContext(StoreContext)
 
   const handleSignupToast = () => {
     toast.success("Signup Successful");

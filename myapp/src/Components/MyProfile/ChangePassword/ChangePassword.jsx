@@ -1,21 +1,17 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaEyeSlash, FaRegEye } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
+import { StoreContext } from '../../Context/ContextApi';
 
 const ChangePAssword = () => {
-
+const {api} = useContext(StoreContext)
     const [error, setError] = useState()
     const [showPassword, setShowPassword] = useState(false)
     const [newPasswordShow, setNewPasswordShow] = useState(false)
     const navigate = useNavigate()
 
-    const api = axios.create({
-        baseURL: 'http://localhost:5000',
-        // baseURL: 'https://fooddelivery-backend-varr.onrender.com',
-        withCredentials: true
-    })
 
     const [inputVal, setInputVal] = useState({
         email: '',

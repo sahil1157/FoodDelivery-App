@@ -33,11 +33,10 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
 
     try {
 
-      const response = await api.post('/user/login',
+      await api.post('/user/login',
         { email, password },
 
       );
-      console.log('Login Response:', response.data);
       setShowModal(false);
       setCheck(true)
       Toastify()
@@ -45,10 +44,10 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
       if (err.response) {
         setError(err.response.data.message || 'Login failed. Please check your credentials.');
       } else if (err.request) {
-        console.error('Request:', err.request);
+        // console.error('Request:', err.request);
         setError('No response received from server. Please try again later.');
       } else {
-        console.error('Error:', err.message);
+        // console.error('Error:', err.message);
         setError('An error occurred. Please try again.');
       }
     }

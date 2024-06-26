@@ -176,7 +176,7 @@ const StoreContextProvider = (props) => {
             setSelectItems([])
             navigate('/');
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             return false;
         }
     }
@@ -189,7 +189,7 @@ const StoreContextProvider = (props) => {
                 const getUser = await api.get('/user/profile');
                 setUsers(getUser.data.user);
             } catch (error) {
-                console.log(error);
+                // console.log(error);
             }
         }
         getMyUsers();
@@ -217,7 +217,7 @@ const StoreContextProvider = (props) => {
                 console.error('No results found for the given coordinates.');
             }
         } catch (error) {
-            console.log("Error fetching address:", error);
+            // console.log("Error fetching address:", error);
         }
     };
 
@@ -238,14 +238,14 @@ const StoreContextProvider = (props) => {
                         }
                     );
                 } else {
-                    console.log("Geolocation is not supported by this browser.");
+                    // console.log("Geolocation is not supported by this browser.");
                 }
             } else {
                 try {
                     const parsedAddress = JSON.parse(findAddress);
                     setAddress(parsedAddress);
                 } catch (error) {
-                    console.error('Error parsing address from localStorage:', error);
+                    // console.error('Error parsing address from localStorage:', error);
                 }
             }
         }
@@ -264,7 +264,7 @@ const StoreContextProvider = (props) => {
                 })
                 setStoreEmail(getEmail.data.email)
             } catch (error) {
-                console.log(error)
+                // console.log(error)
             }
         }
         findEmail()

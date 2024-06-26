@@ -2,7 +2,6 @@ const users = require('../Model/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
-const { foodModel } = require('../Model/FoodModel/FoodItems')
 
 
 // User Signup Handler

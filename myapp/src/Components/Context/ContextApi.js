@@ -28,8 +28,8 @@ const StoreContextProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    // const url = "https://fooddelivery-backend-varr.onrender.com";
-    const url = "http://localhost:5000";
+    const url = "https://fooddelivery-backend-varr.onrender.com";
+    // const url = "http://localhost:5000";
 
     // Toast notifications
     const handleToastify = () => {

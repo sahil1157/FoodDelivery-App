@@ -6,8 +6,7 @@ import Loading from '../Screens/Loading';
 import ButtonProfile from './MyProfile/ButtonProfile';
 
 const Navbar = ({ setShowModal, setLogout, check }) => {
-  const { selectItems, loading } = useContext(StoreContext)
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { selectItems, loading,setIsSidebarOpen,isSidebarOpen } = useContext(StoreContext)
   const [activeLink, setActiveLink] = useState(null);
   const navigate = useNavigate();
 
@@ -53,7 +52,7 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
         <div className="flex w-full justify-between items-center">
           <div className='flex flex-row gap-4'>
             <button onClick={() => handleLinkClick('/')} className={`text-3xl font-Ubuntu md:text-3xl font-bold`}>GoFood</button>
-            <div className='hidden lg:flex lg:flex-row ml-16 flex-row items-center gap-7'>
+            <div className='hidden md:flex lg:flex-row ml-16 flex-row items-center gap-7'>
               <Link to="/menu" className={`text-xl font-Ubuntu ${activeLink === '/menu' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/menu')}>menu</Link>
               <Link to="/contact" className={`text-xl font-Ubuntu ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
             </div>

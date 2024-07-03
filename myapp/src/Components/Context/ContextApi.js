@@ -28,8 +28,8 @@ const StoreContextProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    const url = "https://fooddelivery-backend-varr.onrender.com";
-    // const url = "http://localhost:5000";
+    // const url = "https://fooddelivery-backend-varr.onrender.com";
+    const url = "http://localhost:5000";
 
     // Toast notifications
     const handleToastify = () => {
@@ -45,6 +45,9 @@ const StoreContextProvider = (props) => {
         toast.success('Items Added successfully');
     }
 
+    const firstNavigate = () => {
+        navigate('/')
+    }
     const fetchFoodList = async () => {
         try {
             const res = await axios.get(api.defaults.baseURL + "/menu/list", {
@@ -134,7 +137,7 @@ const StoreContextProvider = (props) => {
             const storedItems = localStorage.getItem('Cart');
             setSelectItems(storedItems ? JSON.parse(storedItems) : []);
         } catch (error) {
-            console.error('Error loading cart items from localStorage:', error);
+            // console.error('Error loading cart items from localStorage:', error);
         }
     }, []);
 
@@ -149,13 +152,28 @@ const StoreContextProvider = (props) => {
     useEffect(() => {
         const fetchme = async () => {
             try {
+                const result = await api.get('/user', {
+                    withCredentials: true
+                });
+                setCheck(result.data.valid);
+                setLoading(false);
+            } catch (error) {
+                setLoading(false);
+                setCheck(false);
+            }
+        }
+        fetchme();
+    }, []);
+
+    useEffect(() => {
+        const fetchme = async () => {
+            try {
                 const result = await api.get('/user/payment', {
                     withCredentials: true
                 });
                 setCheck(result.data.valid);
                 setLoading(false);
             } catch (error) {
-                console.log(error);
                 setLoading(false);
                 setCheck(false);
                 navigate('/');
@@ -283,8 +301,15 @@ const StoreContextProvider = (props) => {
         setSortByPrice(searchItems)
     }, [inputVal])
 
+    // to close sidebar if clicked in a specific link
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    useEffect(() => {
+        setIsSidebarOpen(false)
+    }, [navigate])
 
     const contextValue = {
+        isSidebarOpen,
+        setIsSidebarOpen,
         api,
         inputVal,
         setInputVal,

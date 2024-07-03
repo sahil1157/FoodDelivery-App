@@ -72,13 +72,23 @@ const handleUserLogin = async (req, res) => {
 
         // Setting cookies../
         res.cookie('AccessToken', accessToken, { httpOnly: true, sameSite: 'None', secure: true, partitioned: true });
-        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true, partitioned: true});
+        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true, partitioned: true });
 
         return res.json({ Login: true, accessToken, refreshToken });
     } catch (error) {
         return res.status(500).json({ message: 'Error logging in', error });
     }
 };
+
+// check if user is loggedin or not...
+const checkLoggedIn = async (req, res) => {
+    const getRefreshToken = req.cookies.RefreshToken
+    try {
+        if(getRefreshToken) return res.status(200).json({valid:true})
+    } catch (error) {
+        res.sttaus(400).json({valid:false})
+    }
+}
 
 
 const handleVerify = async (req, res, next) => {
@@ -140,14 +150,14 @@ const handleLogout = (req, res) => {
             sameSite: "None",
             expires: new Date(0),
             secure: true,
-             partitioned: true
+            partitioned: true
         })
         res.cookie('AccessToken', '', {
             httpOnly: true,
             sameSite: "None",
             expires: new Date(0),
             secure: true,
-             partitioned: true
+            partitioned: true
         })
         return res.status(200).json({ valid: false, message: 'Logged out successfully' })
     } catch (error) {
@@ -292,6 +302,7 @@ const changePassword = async (req, res) => {
 
 
 module.exports = {
+    checkLoggedIn,
     handleUserSignup,
     handleUserLogin,
     handleVerify,

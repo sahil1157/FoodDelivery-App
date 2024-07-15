@@ -11,9 +11,13 @@ node_modules
 
 
 # misc
+<<<<<<< HEAD
 build
 .DS_Store
 .env
+=======
+.DS_Store
+>>>>>>> origin/main
 .env.local
 .env.development.local
 .env.test.local

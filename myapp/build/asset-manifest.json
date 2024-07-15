@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.5ddf835f.css",
+    "main.js": "/static/js/main.1ef07ed8.js",
+    "static/media/header_img.png": "/static/media/header_img.87c84a24f79531681564.png",
+    "static/media/img_with_phone.png": "/static/media/img_with_phone.32a7d9761ae3b2f7eca8.png",
+    "static/media/food.jpg": "/static/media/food.f0c3b6ff8210df610963.jpg",
+    "static/media/digitalpayment.png": "/static/media/digitalpayment.75772eeab9282f219532.png",
+    "static/media/restaurantbgimg.jpg": "/static/media/restaurantbgimg.2049a35db6a209175a87.jpg",
+    "static/media/ProfileIcon.png": "/static/media/ProfileIcon.70e62af3e2edac7d4149.png",
+    "static/media/realImg.jpg": "/static/media/realImg.0fffcf1449b2bc8bf568.jpg",
+    "static/media/App-Store-Symbol.png": "/static/media/App-Store-Symbol.af673f908a67e1f657eb.png",
+    "static/media/menu_6.png": "/static/media/menu_6.45fd850cdb98eea2cf22.png",
+    "static/media/menu_7.png": "/static/media/menu_7.e0bae496a1779a217fbe.png",
+    "static/media/menu_8.png": "/static/media/menu_8.5dcb8e7f93c6239c600b.png",
+    "static/media/menu_5.png": "/static/media/menu_5.77e17f45eb4e584a6dcb.png",
+    "static/media/menu_1.png": "/static/media/menu_1.b01b82c72f8944b360cb.png",
+    "static/media/menu_3.png": "/static/media/menu_3.26beb0a0cbecaed15c06.png",
+    "static/media/menu_2.png": "/static/media/menu_2.e67909d4321967495cac.png",
+    "static/media/menu_4.png": "/static/media/menu_4.954b7fb395c46eda438f.png",
+    "static/media/empty-cart.png": "/static/media/empty-cart.e6b315e0945449e71ebe.png",
+    "index.html": "/index.html",
+    "main.5ddf835f.css.map": "/static/css/main.5ddf835f.css.map",
+    "main.1ef07ed8.js.map": "/static/js/main.1ef07ed8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5ddf835f.css",
+    "static/js/main.1ef07ed8.js"
+  ]
+}

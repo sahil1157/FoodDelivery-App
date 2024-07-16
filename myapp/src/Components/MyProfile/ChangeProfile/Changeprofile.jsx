@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-import axios from 'axios';
->>>>>>> origin/main
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
@@ -13,15 +9,6 @@ const Changeprofile = () => {
     const [error, setError] = useState()
     const navigate = useNavigate()
 
-<<<<<<< HEAD
-=======
-    // const api = axios.create({
-    //     // baseURL: 'http://localhost:5000',
-    //     baseURL: 'https://fooddelivery-backend-varr.onrender.com',
-    //     withCredentials: true
-    // })
-
->>>>>>> origin/main
     const [inputVal, setInputVal] = useState({
         firstname: "",
         lastname: '',

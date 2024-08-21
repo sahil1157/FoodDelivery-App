@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const { handleUserSignup, handleUserLogin, handleVerify, handleLogout, handleUserDetalis, handleVerifyUsers, editUserProfile, findEmail, changePassword } = require('../Controllers/UserController.js')
+const handleContact = require('../Controllers/ContactUsController.js')
 router.post('/signup', handleUserSignup)
 router.post('/login', handleUserLogin)
-
+router.post('/contactus', handleContact)
 router.get('/payment', handleVerify)
 router.post('/logout', handleLogout)
 router.get('/profile', handleVerifyUsers, handleUserDetalis)

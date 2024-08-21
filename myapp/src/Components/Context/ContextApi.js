@@ -7,7 +7,7 @@ export const StoreContext = createContext(null);
 
 const api = axios.create({
     // baseURL: 'http://localhost:5000',
-    baseURL: 'https://fooddelivery-app-1.onrender.com',
+     baseURL: 'https://fooddelivery-app-1.onrender.com',
     withCredentials: true,
 });
 
@@ -28,13 +28,13 @@ const StoreContextProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    const url = "https://fooddelivery-app-1.onrender.com";
+    // const url = "https://fooddelivery-app-1.onrender.com";
     // const url = "http://localhost:5000";
 
-    // const url = axios.create({
-    //     baseURL: 'http://localhost:5000',
-    //     withCredentials: true,
-    // });
+    const url = axios.create({
+        baseURL: 'http://localhost:5000',
+        withCredentials: true,
+    });
 
     // Toast notifications
     const handleToastify = () => {

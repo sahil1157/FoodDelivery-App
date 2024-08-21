@@ -5,7 +5,8 @@ const mongoConnection = async () => {
     try {
         await mongoose.connect(process.env.mongoURL, {
             serverSelectionTimeoutMS: 5000,
-            dbName:"gofoodmern"
+            dbName:"gofoodmern",
+            writeConcern: { w: 'majority' }
         });
         console.log(('MongoDB connected'));
     } catch (error) {

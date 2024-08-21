@@ -14,6 +14,7 @@ import Profile from '../Screens/Profile'
 import Address from '../Screens/Address'
 import IndexChange from './MyProfile/ChangeProfile/IndexChange'
 import ChangePAssword from './MyProfile/ChangePassword/ChangePassword'
+import IndexContact from './ContactUs/IndexContact'
 
 const Routing = () => {
 
@@ -51,6 +52,7 @@ const Routing = () => {
                         <Route exact path='/menu' element=<Menu setShowFilter={setShowFilter} handleCardItems={handleCardItems} showFilter={showFilter} /> />
                         <Route exact path='/mycart' element=<MyCart /> />
                         <Route exact path='/user/payment' element=<Payment /> />
+                        <Route exact path='/contact' element=<IndexContact /> />
                         <Route exact path='/user/profile' element=<Profile setLogout={setLogout} /> />
                         <Route exact path='/user/payment/address' element=<Address /> />
                         <Route exact path='/user/profile/changeprofile' element=<IndexChange /> />

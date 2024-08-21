@@ -28,13 +28,13 @@ const StoreContextProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    // const url = "https://fooddelivery-app-1.onrender.com";
+    const url = "https://fooddelivery-app-1.onrender.com";
     // const url = "http://localhost:5000";
 
-    const url = axios.create({
-        baseURL: 'http://localhost:5000',
-        withCredentials: true,
-    });
+    // const url = axios.create({
+    //     baseURL: 'http://localhost:5000',
+    //     withCredentials: true,
+    // });
 
     // Toast notifications
     const handleToastify = () => {
@@ -50,9 +50,22 @@ const StoreContextProvider = (props) => {
         toast.success('Items Added successfully');
     }
 
-    const firstNavigate = () => {
-        navigate('/')
-    }
+
+    // check the tokens on every navgation....
+    // useEffect(() => {
+    //     const checkAuth = async () => {
+    //         try {
+    //             const res = await api.get("/user")
+    //             if (res) setCheck(true)
+    //                 console.log(res)
+    //         } catch (error) {
+    //             // console.log(error)
+    //         }
+    //     }
+    //     checkAuth()
+    // }, [navigate])
+
+
     const fetchFoodList = async () => {
         try {
             const res = await axios.get(api.defaults.baseURL + "/menu/list", {

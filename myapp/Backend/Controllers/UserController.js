@@ -54,7 +54,7 @@ const handleUserSignup = async (req, res) => {
 const handleUserLogin = async (req, res) => {
     // getting userdetails from user
     const { email, password } = req.body;
-  
+
     try {
         const user = await users.findOne({ email: email });
         if (!user) {

@@ -6,7 +6,7 @@ import Loading from '../Screens/Loading';
 import ButtonProfile from './MyProfile/ButtonProfile';
 
 const Navbar = ({ setShowModal, setLogout, check }) => {
-  const { selectItems, loading,setIsSidebarOpen,isSidebarOpen } = useContext(StoreContext)
+  const { selectItems, loading, setIsSidebarOpen, isSidebarOpen } = useContext(StoreContext)
   const [activeLink, setActiveLink] = useState(null);
   const navigate = useNavigate();
 

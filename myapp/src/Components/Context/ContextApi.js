@@ -28,13 +28,13 @@ const StoreContextProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    // const url = "https://fooddelivery-app-1.onrender.com";
+    const url = "https://fooddelivery-app-1.onrender.com";
     // const url = "http://localhost:5000";
 
-    const url = axios.create({
-        baseURL: 'http://localhost:5000',
-        withCredentials: true,
-    });
+    // const url = axios.create({
+    //     baseURL: 'http://localhost:5000',
+    //     withCredentials: true,
+    // });
 
     // Toast notifications
     const handleToastify = () => {

@@ -55,7 +55,7 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
 
   return (
     <div style={{ paddingInline: '5%' }} data-aos='fade-up' className='fixed font-thin top-0 left-0 flex items-center z-20 justify-center w-full h-screen backdrop-blur-[2px] bg-opacity-40'>
-      <div className='relative w-full md:w-1/3 bg-white rounded-xl border border-gray-400 p-6'>
+      <div className='relative  bg-white w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto rounded-xl border border-gray-400 p-6'>
         <button onClick={onClose} className='absolute top-4 right-4'>
           <RxCross1 size={25} />
         </button>
@@ -110,6 +110,13 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
           <p className='text-md text-slate-500'>Don't have an Account?
             <button onClick={() => { setShowSignup(true); setShowModal(false) }} className='text-green-500 ml-1'>Signup</button>
           </p>
+        </div>
+        <div className='flex w-full justify-start items-start text-start mt-3 text-xs flex-col gap-1'>
+          <p className='text-black text-sm'>for testing purpose, kindly use</p>
+          <div className='flex flex-col'>
+            <p className='text-gray-400 font-mono'>email : test@gmail.com</p>
+            <p className='text-gray-400 font-mono'>password : test123</p>
+          </div>
         </div>
       </div>
     </div>

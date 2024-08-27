@@ -71,8 +71,8 @@ const handleUserLogin = async (req, res) => {
         const refreshToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '3d' });
 
         // Setting cookies../
-        res.cookie('AccessToken', accessToken, { httpOnly: true, sameSite: 'None', secure: true, partitioned: true });
-        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true, partitioned: true });
+        res.cookie("AccessToken", accessToken, { httpOnly: true, sameSite: "None", secure: true, partitioned: true });
+        res.cookie("RefreshToken", refreshToken, { httpOnly: true, sameSite: "None", secure: true, partitioned: true });
 
         return res.json({ Login: true, accessToken, refreshToken });
     } catch (error) {
@@ -134,22 +134,16 @@ const handleRefreshToken = async (req, res, next) => {
 
 const handleLogout = (req, res) => {
     // loggin out by clearing all the caches and datas inside cookies...
+    const { RefreshToken, AccessToken } = req.cookies
     try {
-        res.cookie('RefreshToken', '', {
-            httpOnly: true,
-            sameSite: "None",
-            expires: new Date(0),
-            secure: true,
-            partitioned: true
-        })
-        res.cookie('AccessToken', '', {
-            httpOnly: true,
-            sameSite: "None",
-            expires: new Date(0),
-            secure: true,
-            partitioned: true
-        })
-        return res.status(200).json({ valid: false, message: 'Logged out successfully' })
+        if (!RefreshToken && !AccessToken) {
+            return res.status(401).json({
+                message: "Error occured, please try again later"
+            })
+        }
+        res.clearCookie("RefreshToken", { httpOnly: true, sameSite: "None", secure: true, partitioned: true });
+        res.clearCookie("AccessToken", { httpOnly: true, sameSite: "None", secure: true, partitioned: true });
+        res.status(200).json({ message: "Logout successful", valid: false });
     } catch (error) {
         res.status(400).json({ valid: false, message: 'Logged out session failed' })
     }

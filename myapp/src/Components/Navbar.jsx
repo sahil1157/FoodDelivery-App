@@ -4,6 +4,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { StoreContext } from './Context/ContextApi';
 import Loading from '../Screens/Loading';
 import ButtonProfile from './MyProfile/ButtonProfile';
+import { useLocation } from 'react-router-dom';
 
 const Navbar = ({ setShowModal, setLogout, check }) => {
   const { selectItems, loading, setIsSidebarOpen, isSidebarOpen } = useContext(StoreContext)
@@ -16,10 +17,12 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
     navigate(link);
   };
 
+  const location = useLocation()
+
 
 
   return (
-    <div className="bg-green-500 text-white">
+    <div className={` ${location.pathname === "/" ? "bg-transparent absolute" : "bg-green-500 relative"} w-full top-0 left-0 z-10 text-white`}>
       <div className={`${isSidebarOpen ? 'block' : 'hidden'} md:hidden backdrop-blur-sm fixed inset-0 z-50 bg-black bg-opacity-50`} onClick={() => setIsSidebarOpen(false)}></div>
       <div className={`${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden fixed inset-y-0 left-0 z-50 w-64 bg-green-500 transform transition duration-300 ease-in-out`}>
         <div className="flex justify-end p-4">
@@ -30,7 +33,7 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
           </button>
         </div>
         <div className="flex flex-col items-center gap-10 mt-6">
-          <Link to="/menu" className={`text-xl font-Ubuntu ${activeLink === '/menu' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/menu')}>menu</Link>
+          <Link to="/menu" className={`text-xl font-Ubuntu ${activeLink === '/menu' || location.pathname === "/menu" ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/menu')}>menu</Link>
           <Link to="/contact" className={`text-xl font-Ubuntu ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
           {
             check && check ? (
@@ -53,7 +56,7 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
           <div className='flex flex-row gap-4'>
             <button onClick={() => handleLinkClick('/')} className={`text-3xl font-Ubuntu md:text-3xl font-bold`}>GoFood</button>
             <div className='hidden md:flex lg:flex-row ml-16 flex-row items-center gap-7'>
-              <Link to="/menu" className={`text-xl font-Ubuntu ${activeLink === '/menu' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/menu')}>menu</Link>
+              <Link to="/menu" className={`text-xl font-Ubuntu ${activeLink === '/menu' || location.pathname === "/menu" ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/menu')}>menu</Link>
               <Link to="/contact" className={`text-xl font-Ubuntu ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
             </div>
           </div>
@@ -91,7 +94,7 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
                     <ButtonProfile />
                   </div>
                 ) : (
-                  <button onClick={() => { setShowModal(true); setActiveLink('login'); }} className={`hidden md:inline-block font-Ubuntu bg-[#2d2c2c] hover:border-slate-600 hover:text-white duration-300 text-[#fd0] px-4 text-md font-[00] h-9 w-20 rounded-md mr-2`}>
+                  <button onClick={() => { setShowModal(true); setActiveLink('login'); }} className={`hidden md:inline-block font-Ubuntu ${location.pathname !== "/" ? "bg-[#2d2c2c]" : "bg-green-500"} hover:border-slate-600 hover:text-white duration-300 text-[#fd0] px-4 text-md font-[00] h-9 w-20 rounded-md mr-2`}>
                     Login
                   </button>
                 )

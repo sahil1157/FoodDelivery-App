@@ -22,7 +22,8 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
 
 
   return (
-    <div className={` ${location.pathname === "/" ? "bg-transparent absolute" : "bg-green-500 relative"} w-full top-0 left-0 z-10 text-white`}>
+    <div className={` bg-green-500 relative w-full top-0 left-0 z-10 text-white`}>
+
       <div className={`${isSidebarOpen ? 'block' : 'hidden'} md:hidden backdrop-blur-sm fixed inset-0 z-50 bg-black bg-opacity-50`} onClick={() => setIsSidebarOpen(false)}></div>
       <div className={`${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden fixed inset-y-0 left-0 z-50 w-64 bg-green-500 transform transition duration-300 ease-in-out`}>
         <div className="flex justify-end p-4">

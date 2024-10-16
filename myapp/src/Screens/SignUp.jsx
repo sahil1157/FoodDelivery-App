@@ -1,5 +1,3 @@
-import Aos from 'aos';
-import "aos/dist/aos.css";
 import React, { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { RxCross1 } from "react-icons/rx";
@@ -72,33 +70,9 @@ const {api} = useContext(StoreContext)
     };
   }, []);
 
-  useEffect(() => {
-    Aos.init({ duration: 100, easing: 'ease-in-out', once: true });
-
-    let timeout;
-    const handleScroll = () => {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-      timeout = setTimeout(() => {
-        Aos.refresh();
-      }, 200);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-    };
-  }, []);
-
   return (
     <div
       style={{ paddingInline: '5%' }}
-      data-aos="fade-up"
       className='fixed top-0 left-0 flex items-center z-20 justify-center w-full h-screen backdrop-blur-[2px] bg-opacity-40'
     >
       <div className=' w-full flex items-center justify-center '>

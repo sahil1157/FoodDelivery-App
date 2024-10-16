@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { RxCross1 } from "react-icons/rx";
 import axios from 'axios';
-import Aos from 'aos';
+// import Aos from 'aos';
 import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 import { StoreContext } from '../Components/Context/ContextApi';
 
@@ -12,14 +12,15 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
   const [error, setError] = useState('');
   axios.defaults.withCredentials = true
 
-  const { Toastify, setCheck, api } = useContext(StoreContext)
-  useEffect(() => {
-    Aos.init({ duration: 200 });
-    document.body.style.overflowY = 'hidden';
-    return () => {
-      document.body.style.overflowY = 'scroll';
-    };
-  }, []);
+  const { Toastify, setCheck, api,setRole } = useContext(StoreContext)
+
+  // useEffect(() => {
+  //   Aos.init({ duration: 200 });
+  //   document.body.style.overflowY = 'hidden';
+  //   return () => {
+  //     document.body.style.overflowY = 'scroll';
+  //   };
+  // }, []);
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -33,13 +34,16 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
 
     try {
 
-      await api.post('/user/login',
+      const res = await api.post('/user/login',
         { email, password },
 
       );
-      setShowModal(false);
-      setCheck(true)
-      Toastify()
+      if (res) {
+        setRole(res.data.role)
+        setShowModal(false);
+        setCheck(true)
+        Toastify()
+      }
     } catch (err) {
       if (err.response) {
         setError(err.response.data.message || 'Login failed. Please check your credentials.');
@@ -54,8 +58,8 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
   };
 
   return (
-    <div style={{ paddingInline: '5%' }} data-aos='fade-up' className='fixed font-thin top-0 left-0 flex items-center z-20 justify-center w-full h-screen backdrop-blur-[2px] bg-opacity-40'>
-      <div className='relative w-full md:w-1/3 bg-white rounded-xl border border-gray-400 p-6'>
+    <div style={{ paddingInline: '5%' }} className='fixed font-thin top-0 left-0 flex items-center z-20 justify-center w-full h-screen backdrop-blur-[2px] bg-opacity-40'>
+      <div className='relative  bg-white w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto rounded-xl border border-gray-400 p-6'>
         <button onClick={onClose} className='absolute top-4 right-4'>
           <RxCross1 size={25} />
         </button>
@@ -106,10 +110,17 @@ const Login = ({ onClose, setShowSignup, setShowModal }) => {
             <button type='submit' className='w-full h-12 bg-green-500 text-white text-xl rounded-lg'>Login</button>
           </div>
         </form>
-        <div className='mt-4 text-center'>
+        <div className='mt-4 text-center lg:text-start'>
           <p className='text-md text-slate-500'>Don't have an Account?
             <button onClick={() => { setShowSignup(true); setShowModal(false) }} className='text-green-500 ml-1'>Signup</button>
           </p>
+        </div>
+        <div className='flex w-full justify-start items-start text-start mt-3 text-xs flex-col gap-1'>
+          <p className='text-black text-sm'>for testing purpose, kindly use</p>
+          <div className='flex flex-col'>
+            <p className='text-gray-400 font-mono'>email : test@gmail.com</p>
+            <p className='text-gray-400 font-mono'>password : test123</p>
+          </div>
         </div>
       </div>
     </div>

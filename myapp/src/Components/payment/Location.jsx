@@ -37,7 +37,7 @@ const Location = () => {
 
     }
     useEffect(() => {
-        const getUserLocation = JSON.parse(localStorage.getItem('usersAddress'))
+        const getUserLocation = JSON.parse(localStorage.getItem('address'))
         setGetInputVal(getUserLocation)
     }, [])
 

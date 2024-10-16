@@ -52,13 +52,12 @@ const handleUserSignup = async (req, res) => {
 
 // User Login Handler....
 const handleUserLogin = async (req, res) => {
-    // getting userdetails from user
     const { email, password } = req.body;
 
     try {
         const user = await users.findOne({ email: email });
         if (!user) {
-            return res.status(400).json({ message: 'Email is not registered' });
+            return
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -66,49 +65,107 @@ const handleUserLogin = async (req, res) => {
             return res.status(400).json({ message: 'Invalid password' });
         }
 
-        // Generating tokens...
         const accessToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '2d' });
-        const refreshToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '3d' });
+        const refreshToken = jwt.sign({ email: email }, process.env.secretToken, { expiresIn: '6d' });
 
-        // Setting cookies../
-        res.cookie('AccessToken', accessToken, { httpOnly: true, sameSite: 'None', secure: true, partitioned: true });
-        res.cookie('RefreshToken', refreshToken, { maxAge: 15 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true, partitioned: true });
+        res.cookie("AccessToken", accessToken, { httpOnly: true, sameSite: "None", secure: true, partitioned: true });
+        res.cookie("RefreshToken", refreshToken, { httpOnly: true, sameSite: "None", secure: true, partitioned: true });
 
-        return res.json({ Login: true, accessToken, refreshToken });
+        return res.json({ Login: true, accessToken, refreshToken, role: user.role });
     } catch (error) {
         return res.status(500).json({ message: 'Error logging in', error });
     }
 };
 
 
+
+
 const handleVerify = async (req, res, next) => {
-    // getting access and refresh token stored after login, inside cookieStorage
-    const getAccessToken = req.cookies.AccessToken
-    const getRefreshToken = req.cookies.RefreshToken
+    // Getting access and refresh tokens from cookies
+    const getAccessToken = req.cookies.AccessToken;
+    const getRefreshToken = req.cookies.RefreshToken;
 
     try {
+        // If no refresh token is found, log the user out
         if (!getRefreshToken) {
-            const deleteTokens = await handleLogout(req, res)
-            if (deleteTokens) return
+            const deleteTokens = await handleLogout(req, res);
+            if (deleteTokens) return;
         }
-        else if (!getAccessToken && !getRefreshToken) return res.status(400).json({ message: "No tokens found, please login again", valid: false })
 
-        else if (!getAccessToken) {
-            const getAccessToken = await handleRefreshToken(req, res)
-            if (!getAccessToken) return false
-            req.cookies.AccessToken = getAccessToken
-
-            jwt.verify(getAccessToken, process.env.secretToken, (err, decoded) => {
-                if (err) return res.status(400).json({ valid: false, message: "Tokens has been expired.." })
-                req.email = decoded.email
-                return next()
-            })
+        // If neither token is found, prompt user to log in again
+        if (!getAccessToken && !getRefreshToken) {
+            return res.status(400).json({ message: "No tokens found, please login again", valid: false });
         }
-        else return res.status(200).json({ message: "Registered Successfully", valid: true })
+
+        // If access token is missing but refresh token exists, refresh the access token
+        if (!getAccessToken) {
+            const newAccessToken = await handleRefreshToken(req, res);
+            if (!newAccessToken) {
+                return res.status(400).json({ message: "Failed to refresh access token", valid: false });
+            }
+
+            // Update the cookie with the new access token
+            req.cookies.AccessToken = newAccessToken;
+
+            // Verify the new access token and extract the email
+            jwt.verify(newAccessToken, process.env.secretToken, (err, decoded) => {
+                if (err) {
+                    return res.status(400).json({ valid: false, message: "Token has expired" });
+                }
+
+                req.email = decoded.email; // Store the decoded email in the request
+                return next(); // Proceed to the next middleware
+            });
+        } else {
+            // If access token exists, verify it
+            jwt.verify(getAccessToken, process.env.secretToken, async (err, decoded) => {
+                if (err) {
+                    return res.status(400).json({ valid: false, message: "Token has expired" });
+                }
+
+                const { email } = decoded;
+                req.email = email; // Store decoded email in the request
+
+                try {
+                    // Fetch the user by email
+                    const currentUser = await users.findOne({ email: email });
+
+                    if (!currentUser) {
+                        return res.status(404).json({ message: "User not found", valid: false });
+                    }
+
+                    // Return only the user's role in the response
+                    return res.status(200).json({
+                        valid: true,
+                        data: currentUser
+
+                    });
+                } catch (dbError) {
+                    return res.status(500).json({ message: 'Error fetching user data', error: dbError.message });
+                }
+            });
+        }
     } catch (error) {
+        return res.status(500).json({ message: 'Error verifying user', error: error.message });
+    }
+};
 
+
+
+
+
+// check role
+
+
+// check if admin or not...
+const isAdmin = (req, res, next) => {
+    if (req.user && req.user.role === "Admin")
+        next()
+    else {
+        return res.status(403).json({ message: 'Forbidden: You do not have admin access', valid: false, role: "User" });
     }
 }
+
 
 
 // Refreshes token if expired. This funtion will be called incase the RefreshToken is expired.
@@ -177,6 +234,7 @@ const handleVerifyUsers = async (req, res, next) => {
             jwt.verify(getAccessToken, process.env.secretToken, (err, decoded) => {
                 if (err) return res.status(400).json({ valid: false, message: "Tokens has been expired.." })
                 req.email = decoded.email
+                req.role = decoded.role
                 return next()
             })
         }
@@ -291,7 +349,49 @@ const changePassword = async (req, res) => {
 }
 
 
+const allUsers = async (req, res) => {
+    try {
+        const getAllUsers = await users.find().sort({ name: 1 })
+        if (getAllUsers) return res.status(200).json({ message: getAllUsers })
+    } catch (error) {
+        console.log(error)
+    }
+}
 
+
+// promote as Admin
+
+const PromoteToAdmin = async (req, res) => {
+    const { id } = req.body
+    try {
+        const result = await users.findOneAndUpdate(
+            { _id: id },
+            { $set: { role: "Admin" } },
+            { new: true }
+        );
+        return res.status(200).json({ valid: true, message: "Promoted to Admin", data: result })
+    } catch (error) {
+        console.log("Error occured", error)
+        res.status(404).json({ valid: false })
+    }
+}
+
+
+//demote to User
+
+const demoteToUser = async (req, res) => {
+    const { id } = req.body
+    try {
+        const result = await users.findOneAndUpdate(
+            { _id: id },
+            { $set: { role: "User" } },
+            { new: true }
+        )
+        return res.status(200).json({ valid: true, message: "Demoted to User", data: result })
+    } catch (error) {
+        return res.status(404).json({ valid: false, message: res })
+    }
+}
 
 module.exports = {
     // checkLoggedIn,
@@ -305,5 +405,9 @@ module.exports = {
     editUserProfile,
     findEmail,
     changePassword,
+    isAdmin,
+    allUsers,
+    PromoteToAdmin,
+    demoteToUser
 };
 

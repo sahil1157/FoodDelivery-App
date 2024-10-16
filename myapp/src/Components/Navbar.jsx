@@ -4,22 +4,22 @@ import { FaCartShopping } from "react-icons/fa6";
 import { StoreContext } from './Context/ContextApi';
 import Loading from '../Screens/Loading';
 import ButtonProfile from './MyProfile/ButtonProfile';
+import { useLocation } from 'react-router-dom';
 
 const Navbar = ({ setShowModal, setLogout, check }) => {
-  const { selectItems, loading, setIsSidebarOpen, isSidebarOpen } = useContext(StoreContext)
+  const { selectItems, loading, setIsSidebarOpen, isSidebarOpen, role } = useContext(StoreContext);
   const [activeLink, setActiveLink] = useState(null);
   const navigate = useNavigate();
-
-
+  
   const handleLinkClick = (link) => {
     setActiveLink(link);
     navigate(link);
   };
-
-
+  
+  const location = useLocation();
 
   return (
-    <div className="bg-green-500 text-white">
+    <div className='bg-green-500 relative p-1 w-full top-0 left-0 z-10 text-white'>
       <div className={`${isSidebarOpen ? 'block' : 'hidden'} md:hidden backdrop-blur-sm fixed inset-0 z-50 bg-black bg-opacity-50`} onClick={() => setIsSidebarOpen(false)}></div>
       <div className={`${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden fixed inset-y-0 left-0 z-50 w-64 bg-green-500 transform transition duration-300 ease-in-out`}>
         <div className="flex justify-end p-4">
@@ -30,20 +30,24 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
           </button>
         </div>
         <div className="flex flex-col items-center gap-10 mt-6">
-          <Link to="/menu" className={`text-xl font-Ubuntu ${activeLink === '/menu' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/menu')}>menu</Link>
-          <Link to="/contact" className={`text-xl font-Ubuntu ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
+          <Link to="/menu" className={`text-xl font-Montserrat ${activeLink === '/menu' || location.pathname === "/menu" ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/menu')}>menu</Link>
+          <Link to="/contact" className={`text-xl font-Montserrat ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
           {
             check && check ? (
-              <div onClick={() => { setLogout(true); setIsSidebarOpen(false) }} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'logout' ? 'text-neutral-500' : ''}`}>
+              <div onClick={() => { setLogout(true); setIsSidebarOpen(false) }} className={`block md:hidden font-Montserrat text-lg mr-2 ${activeLink === 'logout' ? 'text-neutral-500' : ''}`}>
                 Logout
               </div>
             ) : (
-              <button onClick={() => { setShowModal(true); setIsSidebarOpen(false) }} className={`block md:hidden font-Ubuntu text-lg mr-2 ${activeLink === 'login' ? 'text-neutral-500' : ''}`}>
+              <button onClick={() => { setShowModal(true); setIsSidebarOpen(false) }} className={`block md:hidden font-Montserrat text-lg mr-2 ${activeLink === 'login' ? 'text-neutral-500' : ''}`}>
                 Login
               </button>
             )
           }
-          {/* <Link to="/mycart" className={`text-xl font-Ubuntu mb-4 ${activeLink === '/cart' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/cart')}>cart</Link> */}
+          {role === "Admin" && (
+            <button onClick={() => navigate("/dashboard")} className="font-Montserrat text-red-500 hover:text-red-600">
+              Admin
+            </button>
+          )}
         </div>
       </div>
 
@@ -51,10 +55,10 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
       <div className="flex text-white justify-between items-center h-16 px-4 md:px-8 lg:px-16">
         <div className="flex w-full justify-between items-center">
           <div className='flex flex-row gap-4'>
-            <button onClick={() => handleLinkClick('/')} className={`text-3xl font-Ubuntu md:text-3xl font-bold`}>GoFood</button>
+            <button onClick={() => handleLinkClick('/')} className={`text-3xl font-Montserrat md:text-3xl font-bold`}>GoFood</button>
             <div className='hidden md:flex lg:flex-row ml-16 flex-row items-center gap-7'>
-              <Link to="/menu" className={`text-xl font-Ubuntu ${activeLink === '/menu' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/menu')}>menu</Link>
-              <Link to="/contact" className={`text-xl font-Ubuntu ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
+              <Link to="/menu" className={`text-xl font-Montserrat ${activeLink === '/menu' || location.pathname === "/menu" ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/menu')}>menu</Link>
+              <Link to="/contact" className={`text-xl font-Montserrat ${activeLink === '/contact' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/contact')}>contact us</Link>
             </div>
           </div>
           <div className="md:hidden items-center justify-end text-end flex flex-row-reverse gap-6 w-full ml-4">
@@ -72,8 +76,8 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
           </div>
         </div>
 
-        <div className="flex gap-2 justify-between w-fit items-center">
-          <button className={`mr-5 md:block hidden ${activeLink === '/mycart' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/mycart')}>
+        <div className="flex gap-5 justify-between w-fit items-center">
+          <button className={`md:block hidden ${activeLink === '/mycart' ? 'border-b-2 border-blue-500' : ''}`} onClick={() => handleLinkClick('/mycart')}>
             <div className='flex relative w-full'>
               <FaCartShopping size={30} />
               {
@@ -81,7 +85,7 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
               }
             </div>
           </button>
-          <div className='w-full  px-3'>
+          <div className='w-full px-3'>
             {
               loading && loading ? (
                 <Loading />
@@ -91,7 +95,7 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
                     <ButtonProfile />
                   </div>
                 ) : (
-                  <button onClick={() => { setShowModal(true); setActiveLink('login'); }} className={`hidden md:inline-block font-Ubuntu bg-[#2d2c2c] hover:border-slate-600 hover:text-white duration-300 text-[#fd0] px-4 text-md font-[00] h-9 w-20 rounded-md mr-2`}>
+                  <button onClick={() => { setShowModal(true); setActiveLink('login'); }} className={`hidden md:inline-block font-Montserrat bg-[#2d2c2c] hover:border-slate-600 hover:text-white duration-300 text-[#fd0] px-4 text-md font-[00] h-9 w-20 rounded-md mr-2`}>
                     Login
                   </button>
                 )
@@ -99,8 +103,13 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
             }
           </div>
 
-
-
+          {
+            role === "Admin" && (
+              <button onClick={() => navigate("/dashboard")} className="hidden md:block bg-red-500 font-Montserrat hover:bg-red-600 text-white py-[5px] px-[9px] rounded-md">
+                Admin
+              </button>
+            )
+          }
         </div>
       </div>
     </div>

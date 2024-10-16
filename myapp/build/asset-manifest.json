@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.af1d3cc3.css",
-    "main.js": "/static/js/main.e56df1a4.js",
+    "main.css": "/static/css/main.ddfe4921.css",
+    "main.js": "/static/js/main.4241195e.js",
     "static/media/header_img.png": "/static/media/header_img.87c84a24f79531681564.png",
     "static/media/img_with_phone.png": "/static/media/img_with_phone.32a7d9761ae3b2f7eca8.png",
-    "static/media/food.jpg": "/static/media/food.f0c3b6ff8210df610963.jpg",
+    "static/media/HomepagePic.jpg": "/static/media/HomepagePic.d02476c5e1f938e775ee.jpg",
     "static/media/digitalpayment.png": "/static/media/digitalpayment.75772eeab9282f219532.png",
     "static/media/restaurantbgimg.jpg": "/static/media/restaurantbgimg.2049a35db6a209175a87.jpg",
     "static/media/ProfileIcon.png": "/static/media/ProfileIcon.70e62af3e2edac7d4149.png",
@@ -20,11 +20,11 @@
     "static/media/menu_4.png": "/static/media/menu_4.954b7fb395c46eda438f.png",
     "static/media/empty-cart.png": "/static/media/empty-cart.e6b315e0945449e71ebe.png",
     "index.html": "/index.html",
-    "main.af1d3cc3.css.map": "/static/css/main.af1d3cc3.css.map",
-    "main.e56df1a4.js.map": "/static/js/main.e56df1a4.js.map"
+    "main.ddfe4921.css.map": "/static/css/main.ddfe4921.css.map",
+    "main.4241195e.js.map": "/static/js/main.4241195e.js.map"
   },
   "entrypoints": [
-    "static/css/main.af1d3cc3.css",
-    "static/js/main.e56df1a4.js"
+    "static/css/main.ddfe4921.css",
+    "static/js/main.4241195e.js"
   ]
 }

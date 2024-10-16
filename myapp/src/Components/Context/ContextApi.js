@@ -27,6 +27,9 @@ const StoreContextProvider = (props) => {
     const [logOut, setLogout] = useState(false);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [loader, setLoader] = useState(true)
+    const [role, setRole] = useState(null)
+    const [currUser, setCurrUser] = useState()
 
     const url = "https://fooddelivery-app-1.onrender.com";
     // const url = "http://localhost:5000";
@@ -50,33 +53,20 @@ const StoreContextProvider = (props) => {
         toast.success('Items Added successfully');
     }
 
-
-    // check the tokens on every navgation....
-    // useEffect(() => {
-    //     const checkAuth = async () => {
-    //         try {
-    //             const res = await api.get("/user")
-    //             if (res) setCheck(true)
-    //                 console.log(res)
-    //         } catch (error) {
-    //             // console.log(error)
-    //         }
-    //     }
-    //     checkAuth()
-    // }, [navigate])
-
-
+    // fetching all the food lists from db..
     const fetchFoodList = async () => {
         try {
-            const res = await axios.get(api.defaults.baseURL + "/menu/list", {
-                withCredentials: true
-            });
-            setFoodList(res.data.data);
+            // setLoader(true)
+            const res = await api.get("/list");
+            if (res) {
+                setFoodList(res.data.data);
+            }
         } catch (error) {
             console.error("Error fetching food list:", error);
         }
     };
 
+    // includes sorting...
     useEffect(() => {
         fetchFoodList();
     }, []);
@@ -150,67 +140,79 @@ const StoreContextProvider = (props) => {
         }
     }, [storeItem, selectItems]);
 
+    // code below is used to get the user's cart items from local storag and merge them with quantity...
     useEffect(() => {
-        try {
-            const storedItems = localStorage.getItem('Cart');
-            setSelectItems(storedItems ? JSON.parse(storedItems) : []);
-        } catch (error) {
-            // console.error('Error loading cart items from localStorage:', error);
-        }
-    }, []);
+        if (food_list && food_list.length > 0) {
+            try {
+                const storedItems = localStorage.getItem('Cart');
 
+                const parsedItems = storedItems ? JSON.parse(storedItems) : [];
+
+                //filtering so as to get the actual cart items...
+                const fetchFoodsFromId = food_list.filter(x =>
+                    parsedItems.some(item => item._id === x._id.toString())
+                ).map(food => {
+                    const matchedItem = parsedItems.find(item => item._id === food._id.toString());
+                    return { ...food, quantity: matchedItem.quantity };
+                });
+
+                setSelectItems(fetchFoodsFromId);
+                setLoader(false)
+
+            } catch (error) {
+                console.error('Error loading cart items from localStorage:', error);
+            }
+        }
+    }, [food_list]);
+
+    // storing the cart items with quantity in local storage
     useEffect(() => {
-        try {
-            localStorage.setItem('Cart', JSON.stringify(selectItems));
-        } catch (error) {
-            console.error('Error saving cart items to localStorage:', error);
+        if (selectItems.length > 0) {
+            try {
+                const cartItems = selectItems.map(x => ({ _id: x._id, quantity: x.quantity }))
+                localStorage.setItem('Cart', JSON.stringify(cartItems));
+            } catch (error) {
+                // console.error('Error saving cart items to localStorage:', error);
+            }
         }
     }, [selectItems]);
 
-    // useEffect(() => {
-    //     const fetchme = async () => {
-    //         try {
-    //             const result = await api.get('/user', {
-    //                 withCredentials: true
-    //             });
-    //             setCheck(result.data.valid);
-    //             setLoading(false);
-    //         } catch (error) {
-    //             setLoading(false);
-    //             setCheck(false);
-    //         }
-    //     }
-    //     fetchme();
-    // }, []);
-
+    // check for payment auth, if no then redirects to home page....
     useEffect(() => {
         const fetchme = async () => {
             try {
                 const result = await api.get('/user/payment', {
                     withCredentials: true
                 });
-                setCheck(result.data.valid);
-                setLoading(false);
+                if (result) {
+                    setCurrUser(result.data.data)
+                    setCheck(result.data.valid);
+                    setRole(result.data.data.role)
+                    setLoading(false);
+                }
             } catch (error) {
+                console.log(error)
                 setLoading(false);
                 setCheck(false);
                 navigate('/');
             }
         }
         fetchme();
-    }, [navigate]);
+    }, []);
 
+    // logout functionality
     const handleLogOut = async () => {
         try {
             const result = await api.post('/user/logout', {
                 withCredentials: true
             });
-            setLogout(false);
-            handleLogoutToastify();
-            setCheck(result.data.valid);
-            localStorage.clear();
-            setSelectItems([])
-            navigate('/');
+            if (result) {
+                setLogout(false);
+                handleLogoutToastify();
+                setCheck(result.data.valid);
+                navigate('/');
+                setRole("User")
+            }
         } catch (error) {
             // console.log(error);
             return false;
@@ -219,11 +221,14 @@ const StoreContextProvider = (props) => {
 
     const [users, setUsers] = useState();
 
+    // gets profile details...
     useEffect(() => {
         const getMyUsers = async () => {
             try {
                 const getUser = await api.get('/user/profile');
-                setUsers(getUser.data.user);
+                if (getUser) {
+                    setUsers(getUser.data.user);
+                }
             } catch (error) {
                 // console.log(error);
             }
@@ -231,6 +236,7 @@ const StoreContextProvider = (props) => {
         getMyUsers();
     }, [check, navigate]);
 
+    // below code is used for getting the current user's address
     const apiKey = 'f9c7c993a5b34346940a24dc1fd76244';
     const apiUrl = 'https://api.opencagedata.com/geocode/v1/json';
 
@@ -257,7 +263,7 @@ const StoreContextProvider = (props) => {
         }
     };
 
-
+    // converts the longitude and latitude into currect details of current user's location...
     useEffect(() => {
         const findAddress = localStorage.getItem('address');
         if (check) {
@@ -298,7 +304,9 @@ const StoreContextProvider = (props) => {
                 const getEmail = await api.get('/user/getemail', {
                     withCredentials: true
                 })
-                setStoreEmail(getEmail.data.email)
+                if (getEmail) {
+                    setStoreEmail(getEmail.data.email)
+                }
             } catch (error) {
                 // console.log(error)
             }
@@ -329,6 +337,7 @@ const StoreContextProvider = (props) => {
         isSidebarOpen,
         setIsSidebarOpen,
         api,
+        fetchFoodList,
         inputVal,
         setInputVal,
         setTotalAmount,
@@ -372,7 +381,11 @@ const StoreContextProvider = (props) => {
         coordinates,
         setGetInputVal,
         getInputVal,
-        storeEmail
+        storeEmail,
+        loader,
+        setRole,
+        role,
+        currUser
 
     };
 

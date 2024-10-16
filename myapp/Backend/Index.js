@@ -33,8 +33,8 @@ app.use(cookieParser());
 
 // API endpoint..
 app.use('/user', userRoute);
-app.use('/menu', foodRouter);
 app.use('/', foodRouter);
+// app.use('/', foodRouter);
 app.use('/images', express.static('uploads'));
 app.use('/image', express.static('uploads'));
 

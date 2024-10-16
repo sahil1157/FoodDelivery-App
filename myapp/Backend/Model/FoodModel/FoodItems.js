@@ -26,7 +26,7 @@ const foodSchema = mongoose.Schema({
         type: Number,
         required: false
     },
-});
+}, { timestamps: true });
 
 const foodModel = mongoose.models.foodDatas || mongoose.model('foodDatas', foodSchema);
 

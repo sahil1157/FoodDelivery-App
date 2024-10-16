@@ -43,6 +43,11 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
               </button>
             )
           }
+          {role === "Admin" && (
+            <button onClick={() => navigate("/dashboard")} className="font-Montserrat text-red-500 hover:text-red-600">
+              Admin
+            </button>
+          )}
         </div>
       </div>
 
@@ -100,7 +105,7 @@ const Navbar = ({ setShowModal, setLogout, check }) => {
 
           {
             role === "Admin" && (
-              <button onClick={() => navigate("/dashboard")} className="bg-red-500 font-Montserrat hover:bg-red-600 text-white py-[5px] px-[9px] rounded-md">
+              <button onClick={() => navigate("/dashboard")} className="hidden md:block bg-red-500 font-Montserrat hover:bg-red-600 text-white py-[5px] px-[9px] rounded-md">
                 Admin
               </button>
             )

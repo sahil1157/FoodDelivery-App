@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 export const StoreContext = createContext(null);
 
 const api = axios.create({
-    baseURL: 'http://localhost:5000',
-    //  baseURL: 'https://fooddelivery-app-1.onrender.com',
+    // baseURL: 'http://localhost:5000',
+     baseURL: 'https://fooddelivery-app-1.onrender.com',
     withCredentials: true,
 });
 
@@ -31,8 +31,8 @@ const StoreContextProvider = (props) => {
     const [role, setRole] = useState(null)
     const [currUser, setCurrUser] = useState()
 
-    // const url = "https://fooddelivery-app-1.onrender.com";
-    const url = "http://localhost:5000";
+    const url = "https://fooddelivery-app-1.onrender.com";
+    // const url = "http://localhost:5000";
 
     // const url = axios.create({
     //     baseURL: 'http://localhost:5000',

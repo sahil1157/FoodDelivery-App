@@ -1,6 +1,8 @@
 const express = require('express')
 const multer = require("multer")
-const {addFood,listFood, removeFood} = require('../Model/FoodModel/FoodController')
+const { addFood, listFood, removeFood, editFood } = require('../Model/FoodModel/FoodController')
+const { isAdmin } = require('../Controllers/UserController')
+const protection = require('../Middleware/check-auth')
 
 
 const foodRouter = express.Router()
@@ -14,8 +16,11 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage })
 
+foodRouter.get("/list", listFood)
+foodRouter.post("/add", upload.single("image"), addFood)
+// foodRouter.use(protection)
 foodRouter.post('/', upload.single("image"), addFood)
-foodRouter.get("/list",listFood)
-foodRouter.get('/remove',removeFood)
+foodRouter.post('/remove', removeFood)
+foodRouter.post('/edit', upload.single("image"), editFood)
 
 module.exports = foodRouter

@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily:{
-      Ubuntu : "Ubuntu"
+      Ubuntu : "Ubuntu",
+      Montserrat : "Montserrat"
     },
   },
   plugins: [],

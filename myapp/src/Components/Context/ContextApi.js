@@ -28,6 +28,8 @@ const StoreContextProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const [loader, setLoader] = useState(true)
+    const [role, setRole] = useState(null)
+    const [currUser, setCurrUser] = useState()
 
     const url = "https://fooddelivery-app-1.onrender.com";
     // const url = "http://localhost:5000";
@@ -55,10 +57,10 @@ const StoreContextProvider = (props) => {
     const fetchFoodList = async () => {
         try {
             // setLoader(true)
-            const res = await axios.get(api.defaults.baseURL + "/menu/list", {
-                withCredentials: true
-            });
-            setFoodList(res.data.data);
+            const res = await api.get("/list");
+            if (res) {
+                setFoodList(res.data.data);
+            }
         } catch (error) {
             console.error("Error fetching food list:", error);
         }
@@ -182,9 +184,14 @@ const StoreContextProvider = (props) => {
                 const result = await api.get('/user/payment', {
                     withCredentials: true
                 });
-                setCheck(result.data.valid);
-                setLoading(false);
+                if (result) {
+                    setCurrUser(result.data.data)
+                    setCheck(result.data.valid);
+                    setRole(result.data.data.role)
+                    setLoading(false);
+                }
             } catch (error) {
+                console.log(error)
                 setLoading(false);
                 setCheck(false);
                 navigate('/');
@@ -199,10 +206,13 @@ const StoreContextProvider = (props) => {
             const result = await api.post('/user/logout', {
                 withCredentials: true
             });
-            setLogout(false);
-            handleLogoutToastify();
-            setCheck(result.data.valid);
-            navigate('/');
+            if (result) {
+                setLogout(false);
+                handleLogoutToastify();
+                setCheck(result.data.valid);
+                navigate('/');
+                setRole("User")
+            }
         } catch (error) {
             // console.log(error);
             return false;
@@ -216,7 +226,9 @@ const StoreContextProvider = (props) => {
         const getMyUsers = async () => {
             try {
                 const getUser = await api.get('/user/profile');
-                setUsers(getUser.data.user);
+                if (getUser) {
+                    setUsers(getUser.data.user);
+                }
             } catch (error) {
                 // console.log(error);
             }
@@ -251,7 +263,7 @@ const StoreContextProvider = (props) => {
         }
     };
 
-// converts the longitude and latitude into currect details of current user's location...
+    // converts the longitude and latitude into currect details of current user's location...
     useEffect(() => {
         const findAddress = localStorage.getItem('address');
         if (check) {
@@ -292,7 +304,9 @@ const StoreContextProvider = (props) => {
                 const getEmail = await api.get('/user/getemail', {
                     withCredentials: true
                 })
-                setStoreEmail(getEmail.data.email)
+                if (getEmail) {
+                    setStoreEmail(getEmail.data.email)
+                }
             } catch (error) {
                 // console.log(error)
             }
@@ -323,6 +337,7 @@ const StoreContextProvider = (props) => {
         isSidebarOpen,
         setIsSidebarOpen,
         api,
+        fetchFoodList,
         inputVal,
         setInputVal,
         setTotalAmount,
@@ -367,7 +382,10 @@ const StoreContextProvider = (props) => {
         setGetInputVal,
         getInputVal,
         storeEmail,
-        loader
+        loader,
+        setRole,
+        role,
+        currUser
 
     };
 
